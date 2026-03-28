@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const email = 'hello@example.com';
+---
+
+<BaseLayout title="Contact" description="Get in touch for product design collaborations.">
+  <article class="mx-auto max-w-content px-6 py-16 md:py-24">
+    <header class="max-w-prose">
+      <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Contact</h1>
+      <p class="mt-6 text-lg leading-relaxed text-stone-700">
+        Open to selected product design work, advisory conversations, and speaking. Share a bit of context
+        about the problem space and timeline.
+      </p>
+    </header>
+
+    <div class="mt-14 max-w-prose space-y-8">
+      <p>
+        <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">Email</span>
+        <a
+          href={`mailto:${email}`}
+          class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+        >
+          {email}
+        </a>
+      </p>
+      <p>
+        <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">LinkedIn</span>
+        <a
+          href="https://www.linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+        >
+          Add your profile link
+        </a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>

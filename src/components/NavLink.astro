@@ -1,0 +1,25 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+}
+
+const { href, class: className = '' } = Astro.props;
+const path = Astro.url.pathname;
+const normalized = path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path;
+const isActive =
+  href === '/'
+    ? normalized === '' || normalized === '/'
+    : normalized === href || normalized.startsWith(href + '/');
+---
+
+<a
+  href={href}
+  class:list={[
+    'transition-colors',
+    isActive ? 'text-stone-900' : 'text-stone-600 hover:text-stone-900',
+    className,
+  ]}
+>
+  <slot />
+</a>

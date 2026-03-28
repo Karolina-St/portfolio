@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const featuredProjects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const testimonials = (await getCollection('testimonials')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout
+  title="Home"
+  description="Product designer — calm, structured interfaces for fintech, health, and complex domains."
+>
+  <section class="mx-auto max-w-content px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+    <p class="font-serif text-3xl md:text-4xl lg:text-[2.75rem] leading-snug text-stone-900 max-w-prose">
+      I design product experiences that stay clear under regulation, risk, and real-world messiness.
+    </p>
+    <p class="mt-8 max-w-prose text-base leading-relaxed text-stone-700">
+      My work sits at the intersection of research, systems, and craft—usually in fintech, health, or other
+      high-stakes contexts where trust and comprehension matter as much as polish.
+    </p>
+    <p class="mt-10">
+      <a
+        href="/about"
+        class="text-sm font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+      >
+        About me
+      </a>
+    </p>
+  </section>
+
+  <section class="border-t border-stone-200 bg-white">
+    <div class="mx-auto max-w-content px-6 py-20 md:py-28">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-14 md:mb-16">
+        <h2 class="font-serif text-2xl md:text-3xl text-stone-900">Selected work</h2>
+        <p class="text-sm text-stone-600 max-w-md leading-relaxed">
+          A few engagements where I led or shaped the design direction. Full case studies live on the work
+          page.
+        </p>
+      </div>
+      <ul class="grid gap-12 md:gap-16 md:grid-cols-2">
+        {
+          featuredProjects.map((project) => (
+            <li>
+              <article>
+                <h3 class="font-serif text-xl text-stone-900">
+                  <a
+                    href={`/work/${project.slug}`}
+                    class="hover:opacity-80 transition-opacity"
+                  >
+                    {project.data.title}
+                  </a>
+                </h3>
+                {project.data.role && (
+                  <p class="mt-2 text-xs font-medium uppercase tracking-wider text-stone-500">
+                    {project.data.role}
+                  </p>
+                )}
+                <p class="mt-4 text-sm leading-relaxed text-stone-700">{project.data.description}</p>
+                <p class="mt-4">
+                  <a
+                    href={`/work/${project.slug}`}
+                    class="text-sm font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+                  >
+                    View project
+                  </a>
+                </p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-16 md:mt-20">
+        <a
+          href="/work"
+          class="text-sm font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+        >
+          Show more
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="border-t border-stone-200">
+    <div class="mx-auto max-w-content px-6 py-20 md:py-28">
+      <h2 class="font-serif text-2xl md:text-3xl text-stone-900 mb-14 md:mb-16">
+        What colleagues say
+      </h2>
+      <ul class="grid gap-12 md:gap-14 md:grid-cols-3">
+        {
+          testimonials.map((t) => (
+            <li>
+              <blockquote class="space-y-6">
+                <p class="font-serif text-lg leading-relaxed text-stone-800">
+                  “{t.data.quote}”
+                </p>
+                <footer class="text-sm text-stone-600">
+                  <cite class="not-italic font-medium text-stone-800">{t.data.author}</cite>
+                  <span class="block mt-1">
+                    {t.data.role}
+                    {t.data.company && ` · ${t.data.company}`}
+                  </span>
+                </footer>
+              </blockquote>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

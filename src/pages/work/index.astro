@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout title="Work" description="Case studies and project work — product design portfolio.">
+  <div class="mx-auto max-w-content px-6 py-16 md:py-24">
+    <header class="max-w-prose mb-16 md:mb-20">
+      <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Work</h1>
+      <p class="mt-6 text-lg leading-relaxed text-stone-700">
+        Projects spanning health, fintech, and internal platforms. Each write-up summarizes context, approach,
+        and outcomes—replace placeholders with your own narrative and metrics.
+      </p>
+    </header>
+
+    <ul class="space-y-16 md:space-y-20">
+      {
+        projects.map((project) => (
+          <li>
+            <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
+              <h2 class="font-serif text-2xl text-stone-900">
+                <a
+                  href={`/work/${project.slug}`}
+                  class="hover:opacity-80 transition-opacity"
+                >
+                  {project.data.title}
+                </a>
+              </h2>
+              {project.data.role && (
+                <p class="mt-2 text-xs font-medium uppercase tracking-wider text-stone-500">
+                  {project.data.role}
+                </p>
+              )}
+              <p class="mt-4 text-stone-700 leading-relaxed">{project.data.description}</p>
+              <p class="mt-6">
+                <a
+                  href={`/work/${project.slug}`}
+                  class="text-sm font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+                >
+                  Read case study
+                </a>
+              </p>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

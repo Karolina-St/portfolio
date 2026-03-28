@@ -1,0 +1,32 @@
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/600.css';
+@import '@fontsource/libre-baskerville/400.css';
+@import '@fontsource/libre-baskerville/700.css';
+@import '@fontsource/libre-baskerville/400-italic.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prose for case studies */
+@layer components {
+  .prose-portfolio {
+    @apply max-w-prose text-stone-800 leading-relaxed;
+  }
+  .prose-portfolio h2 {
+    @apply font-serif text-2xl text-stone-900 mt-12 mb-4;
+  }
+  .prose-portfolio h3 {
+    @apply font-sans text-lg font-semibold text-stone-900 mt-8 mb-3;
+  }
+  .prose-portfolio p {
+    @apply mb-4;
+  }
+  .prose-portfolio ul {
+    @apply list-disc pl-6 mb-4 space-y-2;
+  }
+  .prose-portfolio a {
+    @apply text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-800 transition-colors;
+  }
+}
