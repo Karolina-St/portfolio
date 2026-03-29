@@ -9,10 +9,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-size: 16px;
+  }
+}
+
 /* Prose for case studies */
 @layer components {
   .prose-portfolio {
-    @apply max-w-prose text-stone-800 leading-relaxed;
+    @apply max-w-prose text-base text-stone-800 leading-relaxed;
   }
   .prose-portfolio h2 {
     @apply font-serif text-2xl text-stone-900 mt-12 mb-4;

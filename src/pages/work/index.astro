@@ -11,7 +11,7 @@ const projects = (await getCollection('projects')).sort(
   <div class="mx-auto max-w-content px-6 py-16 md:py-24">
     <header class="max-w-prose mb-16 md:mb-20">
       <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Work</h1>
-      <p class="mt-6 text-lg leading-relaxed text-stone-700">
+      <p class="mt-6 text-base leading-relaxed text-stone-700">
         Projects spanning health, fintech, and internal platforms. Each write-up summarizes context, approach,
         and outcomes—replace placeholders with your own narrative and metrics.
       </p>
@@ -39,7 +39,7 @@ const projects = (await getCollection('projects')).sort(
               <p class="mt-6">
                 <a
                   href={`/work/${project.slug}`}
-                  class="text-sm font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+                  class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
                 >
                   Read case study
                 </a>

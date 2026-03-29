@@ -1,40 +1,63 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const email = 'hello@example.com';
+const email = 'k.stachowiak.glownia@gmail.com';
+const phoneDisplay = '+48 570 174 966';
+const phoneTel = '+48570174966';
 ---
 
-<BaseLayout title="Contact" description="Get in touch for product design collaborations.">
+<BaseLayout title="Get in touch" description="Get in touch for product design collaborations.">
   <article class="mx-auto max-w-content px-6 py-16 md:py-24">
-    <header class="max-w-prose">
-      <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Contact</h1>
-      <p class="mt-6 text-lg leading-relaxed text-stone-700">
-        Open to selected product design work, advisory conversations, and speaking. Share a bit of context
-        about the problem space and timeline.
-      </p>
-    </header>
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-16">
+      <div class="min-w-0 flex-1">
+        <header class="max-w-prose">
+          <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Get in touch</h1>
+        </header>
 
-    <div class="mt-14 max-w-prose space-y-8">
-      <p>
-        <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">Email</span>
-        <a
-          href={`mailto:${email}`}
-          class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
-        >
-          {email}
-        </a>
-      </p>
-      <p>
-        <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">LinkedIn</span>
-        <a
-          href="https://www.linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
-        >
-          Add your profile link
-        </a>
-      </p>
+        <div class="mt-14 max-w-prose space-y-8">
+          <p>
+            <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">Email</span>
+            <a
+              href={`mailto:${email}`}
+              class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+            >
+              {email}
+            </a>
+          </p>
+          <p>
+            <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">LinkedIn</span>
+            <a
+              href="https://www.linkedin.com/in/karolina-stachowiak/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+            >
+              Karolina Stachowiak
+            </a>
+          </p>
+          <p>
+            <span class="block text-xs font-medium uppercase tracking-wider text-stone-500 mb-2">Phone</span>
+            <a
+              href={`tel:${phoneTel}`}
+              class="text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+            >
+              {phoneDisplay}
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <figure class="mx-auto w-full max-w-xs shrink-0 lg:mx-0 lg:w-64 lg:self-end">
+        <img
+          src="/portrait-no-bg.png"
+          alt="Karolina Stachowiak"
+          width="1080"
+          height="1080"
+          class="w-full rounded-lg object-cover aspect-square grayscale shadow-sm"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </div>
   </article>
 </BaseLayout>

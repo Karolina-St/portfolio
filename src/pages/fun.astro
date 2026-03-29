@@ -1,5 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const figmaPairImgClass =
+  'block h-auto w-full origin-center rounded-lg transition-transform duration-300 ease-out will-change-transform group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100';
+
+const figmaExamples = [
+  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
+  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
+  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
+  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
+  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
+];
 ---
 
 <BaseLayout
@@ -9,24 +20,54 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <article class="mx-auto max-w-content px-6 py-16 md:py-24">
     <header class="max-w-prose">
       <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Fun</h1>
-      <p class="mt-6 text-lg leading-relaxed text-stone-700">
+      <p class="mt-6 text-base leading-relaxed text-stone-700">
         Space for sketching, typography exploration, and ideas that never needed a sprint. Swap this copy for
         links to side projects, talks, or visual experiments when you are ready.
       </p>
     </header>
-    <ul class="mt-14 max-w-prose space-y-6 text-stone-700">
-      <li>
-        <span class="font-medium text-stone-900">Type & layout studies</span>
-        — occasional posters and editorial layouts; mostly for practice.
-      </li>
-      <li>
-        <span class="font-medium text-stone-900">Small tools</span>
-        — scripts and one-off helpers for personal workflows.
-      </li>
-      <li>
-        <span class="font-medium text-stone-900">Photography</span>
-        — mostly documentary-style, nothing staged.
-      </li>
-    </ul>
+    <section class="mt-14 md:mt-16" aria-labelledby="fun-figma-heading">
+      <h2 id="fun-figma-heading" class="font-serif text-2xl md:text-3xl text-stone-900">
+        Figma exploration
+      </h2>
+      <p class="mt-4 max-w-prose text-base leading-relaxed text-stone-700">
+        UI elements and graphic challenges, done without a specific context.
+      </p>
+      {
+        figmaExamples.map((example, index) => (
+          <>
+            <div
+              class:list={[
+                '-mx-2 flex flex-col gap-8 px-2 md:-mx-3 md:flex-row md:gap-10 md:px-3 md:items-stretch',
+                index === 0 ? 'mt-10' : 'mt-12 md:mt-14',
+              ]}
+            >
+              <figure class="group m-0 min-w-0 flex-1 overflow-visible">
+                <img
+                  src="/camera.png"
+                  alt={`Camera illustration — Figma exploration (${index + 1} of ${figmaExamples.length})`}
+                  width="1542"
+                  height="919"
+                  class={figmaPairImgClass}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="group m-0 min-w-0 flex-1 overflow-visible">
+                <img
+                  src="/camera-outline.png"
+                  alt={`Camera outline illustration — Figma exploration (${index + 1} of ${figmaExamples.length})`}
+                  width="1448"
+                  height="835"
+                  class={figmaPairImgClass}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+            <p class="mt-6 px-2 text-sm text-stone-600 md:px-3">{example.caption}</p>
+          </>
+        ))
+      }
+    </section>
   </article>
 </BaseLayout>
