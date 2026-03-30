@@ -6,10 +6,39 @@ const figmaPairImgClass =
 
 const figmaExamples = [
   { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
-  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
-  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
-  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
-  { caption: 'Graphic challenge: Kodak Ultra F9 | Figma' },
+  {
+    caption: 'Graphic challenge: Vinyl Turntable | Figma',
+    leftSrc: '/Fun/vinyl.png',
+    leftWidth: 2846,
+    leftHeight: 1908,
+    leftAlt: 'Vinyl turntable illustration',
+    rightSrc: '/Fun/vinyl-outline.png',
+    rightWidth: 2846,
+    rightHeight: 1908,
+    rightAlt: 'Vinyl turntable outline illustration',
+  },
+  {
+    caption: 'Graphic challenge: Alarm Clock | Figma',
+    leftSrc: '/Fun/alarm-clock.png',
+    leftWidth: 3004,
+    leftHeight: 2014,
+    leftAlt: 'Alarm clock illustration',
+    rightSrc: '/Fun/alarm-clock-outline.png',
+    rightWidth: 3004,
+    rightHeight: 2014,
+    rightAlt: 'Alarm clock outline illustration',
+  },
+  {
+    caption: 'Graphic challenge: Xbox pad | Figma',
+    leftSrc: '/Fun/pad.png',
+    leftWidth: 3200,
+    leftHeight: 2200,
+    leftAlt: 'Game controller illustration',
+    rightSrc: '/Fun/pad-outline.png',
+    rightWidth: 3200,
+    rightHeight: 2200,
+    rightAlt: 'Game controller outline illustration',
+  },
 ];
 ---
 
@@ -21,8 +50,7 @@ const figmaExamples = [
     <header class="max-w-prose">
       <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Fun</h1>
       <p class="mt-6 text-base leading-relaxed text-stone-700">
-        Space for sketching, typography exploration, and ideas that never needed a sprint. Swap this copy for
-        links to side projects, talks, or visual experiments when you are ready.
+        Space for things made for fun and exercise
       </p>
     </header>
     <section class="mt-14 md:mt-16" aria-labelledby="fun-figma-heading">
@@ -32,42 +60,44 @@ const figmaExamples = [
       <p class="mt-4 max-w-prose text-base leading-relaxed text-stone-700">
         UI elements and graphic challenges, done without a specific context.
       </p>
-      {
-        figmaExamples.map((example, index) => (
-          <>
-            <div
-              class:list={[
-                '-mx-2 flex flex-col gap-8 px-2 md:-mx-3 md:flex-row md:gap-10 md:px-3 md:items-stretch',
-                index === 0 ? 'mt-10' : 'mt-12 md:mt-14',
-              ]}
+      <div class="mt-10 flex flex-col gap-24 md:gap-32 lg:gap-40">
+        {
+          figmaExamples.map((example, index) => (
+            <section
+              class="min-w-0"
+              aria-label={`Figma example ${index + 1} of ${figmaExamples.length}`}
             >
-              <figure class="group m-0 min-w-0 flex-1 overflow-visible">
-                <img
-                  src="/camera.png"
-                  alt={`Camera illustration — Figma exploration (${index + 1} of ${figmaExamples.length})`}
-                  width="1542"
-                  height="919"
-                  class={figmaPairImgClass}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
-              <figure class="group m-0 min-w-0 flex-1 overflow-visible">
-                <img
-                  src="/camera-outline.png"
-                  alt={`Camera outline illustration — Figma exploration (${index + 1} of ${figmaExamples.length})`}
-                  width="1448"
-                  height="835"
-                  class={figmaPairImgClass}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
-            </div>
-            <p class="mt-6 px-2 text-sm text-stone-600 md:px-3">{example.caption}</p>
-          </>
-        ))
-      }
+              <div
+                class="-mx-2 flex flex-col gap-8 px-2 md:-mx-3 md:flex-row md:gap-10 md:px-3 md:items-stretch"
+              >
+                <figure class="group m-0 min-w-0 flex-1 overflow-visible">
+                  <img
+                    src={example.leftSrc ?? '/camera.png'}
+                    alt={`${example.leftAlt ?? 'Camera illustration'} — Figma exploration (${index + 1} of ${figmaExamples.length})`}
+                    width={example.leftWidth ?? 1542}
+                    height={example.leftHeight ?? 919}
+                    class={figmaPairImgClass}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+                <figure class="group m-0 min-w-0 flex-1 overflow-visible">
+                  <img
+                    src={example.rightSrc ?? '/camera-outline.png'}
+                    alt={`${example.rightAlt ?? 'Camera outline illustration'} — Figma exploration (${index + 1} of ${figmaExamples.length})`}
+                    width={example.rightWidth ?? 1448}
+                    height={example.rightHeight ?? 835}
+                    class={figmaPairImgClass}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              </div>
+              <p class="mt-6 px-2 text-sm text-stone-600 md:px-3">{example.caption}</p>
+            </section>
+          ))
+        }
+      </div>
     </section>
   </article>
 </BaseLayout>
