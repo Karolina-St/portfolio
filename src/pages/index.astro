@@ -16,17 +16,17 @@ const testimonials = (await getCollection('testimonials')).sort(
   description="Product designer — calm, structured interfaces for fintech, health, and complex domains."
 >
   <section class="mx-auto max-w-content px-6 pt-16 pb-20 md:pt-24 md:pb-28">
-    <p class="font-serif text-3xl md:text-4xl lg:text-[2.75rem] leading-snug text-stone-900 max-w-prose">
+    <p class="font-serif text-3xl md:text-4xl lg:text-[2.5rem] leading-snug text-stone-900 max-w-prose">
       Hello! Cześć!
     </p>
-    <p class="mt-4 font-serif text-3xl md:text-4xl lg:text-[2.75rem] leading-[54px] text-stone-900 max-w-prose">
+    <p class="mt-4 font-serif text-3xl md:text-4xl lg:text-[2.25rem] leading-[130%] lg:leading-[1.33] text-stone-900 max-w-prose">
       I like to understand how things work – and use that to design products that are clear, structured, and
       grounded in real user needs.
     </p>
-    <p class="mt-8 max-w-prose text-base leading-relaxed text-stone-700">
-      I often initiate new approaches, including AI, to improve how teams work.
-      Currently, I work at Polkomtel (telco), and I’m also developing my own ideas through Saha Apps.
-    </p>
+    <h2 class="mt-8 max-w-prose text-base font-normal font-sans leading-relaxed text-stone-700">
+      I often initiate new projects and approaches, including AI-related ones.
+      Currently, I work at Plus (telco), and I’m also developing my own ideas through Saha Apps.
+    </h2>
     <p class="mt-10">
       <a
         href="/about"
@@ -47,6 +47,12 @@ const testimonials = (await getCollection('testimonials')).sort(
           featuredProjects.map((project) => (
             <li>
               <article>
+                <div
+                  class="mb-4 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
+                  aria-hidden="true"
+                >
+                  Project image
+                </div>
                 <h3 class="font-serif text-xl text-stone-900">
                   <a
                     href={`/work/${project.slug}`}

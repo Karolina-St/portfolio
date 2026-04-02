@@ -53,51 +53,200 @@ const figmaExamples = [
         Space for things made for fun and exercise
       </p>
     </header>
-    <section class="mt-14 md:mt-16" aria-labelledby="fun-figma-heading">
-      <h2 id="fun-figma-heading" class="font-serif text-2xl md:text-3xl text-stone-900">
-        Figma exploration
-      </h2>
-      <p class="mt-4 max-w-prose text-base leading-relaxed text-stone-700">
-        UI elements and graphic challenges, done without a specific context.
-      </p>
-      <div class="mt-10 flex flex-col gap-24 md:gap-32 lg:gap-40">
-        {
-          figmaExamples.map((example, index) => (
-            <section
-              class="min-w-0"
-              aria-label={`Figma example ${index + 1} of ${figmaExamples.length}`}
-            >
-              <div
-                class="-mx-2 flex flex-col gap-8 px-2 md:-mx-3 md:flex-row md:gap-10 md:px-3 md:items-stretch"
-              >
-                <figure class="group m-0 min-w-0 flex-1 overflow-visible">
-                  <img
-                    src={example.leftSrc ?? '/camera.png'}
-                    alt={`${example.leftAlt ?? 'Camera illustration'} — Figma exploration (${index + 1} of ${figmaExamples.length})`}
-                    width={example.leftWidth ?? 1542}
-                    height={example.leftHeight ?? 919}
-                    class={figmaPairImgClass}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-                <figure class="group m-0 min-w-0 flex-1 overflow-visible">
-                  <img
-                    src={example.rightSrc ?? '/camera-outline.png'}
-                    alt={`${example.rightAlt ?? 'Camera outline illustration'} — Figma exploration (${index + 1} of ${figmaExamples.length})`}
-                    width={example.rightWidth ?? 1448}
-                    height={example.rightHeight ?? 835}
-                    class={figmaPairImgClass}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              </div>
-              <p class="mt-6 px-2 text-sm text-stone-600 md:px-3">{example.caption}</p>
-            </section>
-          ))
-        }
+
+    <div class="mt-14 md:mt-16" data-fun-tabs>
+      <div role="tablist" aria-label="Fun categories" class="border-b border-stone-200">
+        <div
+          class="-mx-6 flex flex-nowrap gap-x-4 overflow-x-auto overscroll-x-contain px-6 md:mx-0 md:gap-x-12 md:overflow-visible md:px-0"
+        >
+          <button
+            type="button"
+            role="tab"
+            id="fun-tab-figma"
+            class="-mb-px shrink-0 whitespace-nowrap border-b-[3px] border-transparent pb-2 text-left text-base font-normal text-stone-500 transition-colors hover:text-stone-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 data-[active=true]:border-stone-900 data-[active=true]:font-semibold data-[active=true]:text-stone-900"
+            aria-selected="true"
+            aria-controls="fun-panel-figma"
+            data-active="true"
+            tabindex="0"
+          >
+            Figma exploration
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="fun-tab-data"
+            class="-mb-px shrink-0 whitespace-nowrap border-b-[3px] border-transparent pb-2 text-left text-base font-normal text-stone-500 transition-colors hover:text-stone-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 data-[active=true]:border-stone-900 data-[active=true]:font-semibold data-[active=true]:text-stone-900"
+            aria-selected="false"
+            aria-controls="fun-panel-data"
+            data-active="false"
+            tabindex="-1"
+          >
+            Data Visualization
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="fun-tab-art"
+            class="-mb-px shrink-0 whitespace-nowrap border-b-[3px] border-transparent pb-2 text-left text-base font-normal text-stone-500 transition-colors hover:text-stone-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 data-[active=true]:border-stone-900 data-[active=true]:font-semibold data-[active=true]:text-stone-900"
+            aria-selected="false"
+            aria-controls="fun-panel-art"
+            data-active="false"
+            tabindex="-1"
+          >
+            Art
+          </button>
+        </div>
       </div>
-    </section>
+
+      <div class="mt-10 md:mt-12">
+        <div
+          id="fun-panel-figma"
+          role="tabpanel"
+          aria-labelledby="fun-tab-figma"
+          tabindex="0"
+          class="outline-none"
+        >
+          <p class="max-w-prose text-base leading-relaxed text-stone-700">
+            UI elements and graphic challenges, done without a specific context.
+          </p>
+          <div class="mt-10 flex flex-col gap-24 md:gap-32 lg:gap-40">
+            {
+              figmaExamples.map((example, index) => (
+                <section
+                  class="min-w-0"
+                  aria-label={`Figma example ${index + 1} of ${figmaExamples.length}`}
+                >
+                  <div
+                    class="-mx-2 flex flex-col gap-8 px-2 md:-mx-3 md:flex-row md:gap-10 md:px-3 md:items-stretch"
+                  >
+                    <figure class="group m-0 min-w-0 flex-1 overflow-visible">
+                      <img
+                        src={example.leftSrc ?? '/camera.png'}
+                        alt={`${example.leftAlt ?? 'Camera illustration'} — Figma exploration (${index + 1} of ${figmaExamples.length})`}
+                        width={example.leftWidth ?? 1542}
+                        height={example.leftHeight ?? 919}
+                        class={figmaPairImgClass}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
+                    <figure class="group m-0 min-w-0 flex-1 overflow-visible">
+                      <img
+                        src={example.rightSrc ?? '/camera-outline.png'}
+                        alt={`${example.rightAlt ?? 'Camera outline illustration'} — Figma exploration (${index + 1} of ${figmaExamples.length})`}
+                        width={example.rightWidth ?? 1448}
+                        height={example.rightHeight ?? 835}
+                        class={figmaPairImgClass}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
+                  </div>
+                  <p class="mt-6 px-2 text-sm text-stone-600 md:px-3">{example.caption}</p>
+                </section>
+              ))
+            }
+          </div>
+        </div>
+
+        <div
+          id="fun-panel-data"
+          role="tabpanel"
+          aria-labelledby="fun-tab-data"
+          hidden
+          tabindex="0"
+          class="outline-none"
+        >
+          <p class="max-w-prose text-base leading-relaxed text-stone-700">
+            Placeholder for data visualization experiments—charts, small tools, and visual explanations of
+            datasets.
+          </p>
+          <div
+            class="mt-10 flex max-w-prose aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
+            aria-hidden="true"
+          >
+            Content placeholder
+          </div>
+        </div>
+
+        <div
+          id="fun-panel-art"
+          role="tabpanel"
+          aria-labelledby="fun-tab-art"
+          hidden
+          tabindex="0"
+          class="outline-none"
+        >
+          <p class="max-w-prose text-base leading-relaxed text-stone-700">
+            Placeholder for personal art, sketches, and other non-digital or non-Figma work.
+          </p>
+          <div
+            class="mt-10 flex max-w-prose aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
+            aria-hidden="true"
+          >
+            Content placeholder
+          </div>
+        </div>
+      </div>
+    </div>
   </article>
+
+  <script>
+    (() => {
+      const root = document.querySelector('[data-fun-tabs]');
+      if (!root) return;
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+      const list = root.querySelector('[role="tablist"]');
+
+      function select(index: number) {
+        tabs.forEach((tab, i) => {
+          const on = i === index;
+          tab.setAttribute('aria-selected', String(on));
+          tab.setAttribute('data-active', String(on));
+          tab.tabIndex = on ? 0 : -1;
+        });
+        panels.forEach((panel, i) => {
+          if (i === index) {
+            panel.removeAttribute('hidden');
+          } else {
+            panel.setAttribute('hidden', '');
+          }
+        });
+      }
+
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => {
+          select(i);
+          tab.focus();
+        });
+      });
+
+      list?.addEventListener('keydown', (e) => {
+        const ev = e as KeyboardEvent;
+        const i = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+        if (i < 0) return;
+        if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') {
+          ev.preventDefault();
+          const next = (i + 1) % tabs.length;
+          select(next);
+          tabs[next].focus();
+        } else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+          ev.preventDefault();
+          const prev = (i - 1 + tabs.length) % tabs.length;
+          select(prev);
+          tabs[prev].focus();
+        } else if (ev.key === 'Home') {
+          ev.preventDefault();
+          select(0);
+          tabs[0].focus();
+        } else if (ev.key === 'End') {
+          ev.preventDefault();
+          const last = tabs.length - 1;
+          select(last);
+          tabs[last].focus();
+        }
+      });
+    })();
+  </script>
 </BaseLayout>
