@@ -1,26 +1,54 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import type { ImageMetadata } from 'astro';
 
 const testimonials = (await getCollection('testimonials')).sort(
   (a, b) => a.data.order - b.data.order
 );
+
+const peopleImageGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '../content/people/*.{png,jpg,jpeg,JPG,JPEG,webp,gif}',
+  { eager: true }
+);
+
+const numericStem = (path: string) => {
+  const base = path.split('/').pop() ?? '';
+  return base.replace(/\.[^.]+$/i, '');
+};
+
+/** Gallery order: 9 before 8 (wide 9.png reads better above portrait 8 on mobile). */
+const galleryOrderKey = (n: number) => (n === 8 ? 9 : n === 9 ? 8 : n);
+
+const peoplePhotos = Object.entries(peopleImageGlob)
+  .map(([path, mod]) => {
+    const image = mod.default;
+    const portrait = image.height >= image.width;
+    return { path, image, portrait };
+  })
+  .filter(({ path }) => /^\d+$/.test(numericStem(path)))
+  .sort(
+    (a, b) =>
+      galleryOrderKey(parseInt(numericStem(a.path), 10)) -
+      galleryOrderKey(parseInt(numericStem(b.path), 10))
+  );
 ---
 
 <BaseLayout
   title="About"
   description="Product designer focused on clarity, systems, and thoughtful delivery in complex domains."
 >
-  <article class="mx-auto max-w-content px-6 py-16 md:py-24">
+  <article class="mx-auto max-w-content px-4 py-16 md:px-6 md:py-24">
     <div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12 md:items-start">
       <header class="max-w-prose md:col-span-2 md:min-w-0">
         <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Hello again!</h1>
         <p class="mt-6 text-base leading-relaxed text-stone-700">
-          In my job I love most solving hard problems and reimaigning old solutions to fit new needs. Ant time it is possible, I rely on reaserch and analytical data. This
+          In my job I love most solving hard problems and reimaigning old solutions to fit new needs. Whenever possible, I rely on reaserch and analytical data. This
           approach is rooted in my background in biology, where understanding cause and effect is essential.
         </p>
         <p class="mt-4 text-base leading-relaxed text-stone-700">
-          I’m particularly interested in health and finance products.
+          I’m particularly interested in medtech and finance products.
           I don’t come from these industries directly, but my background in biology (lab and academic work) and personal experience with investing make me especially interested in these areas.
                   </p>
         <p class="mt-6 text-sm leading-relaxed text-stone-600">
@@ -48,7 +76,7 @@ const testimonials = (await getCollection('testimonials')).sort(
       <ul class="mt-10 grid gap-10 md:gap-12 md:grid-cols-3">
         <li class="space-y-3">
           <h3 class="font-serif text-lg text-stone-900">Initiative</h3>
-          <p class="text-base leading-relaxed text-stone-700">I don’t wait for tasks – I propose them.
+          <p class="text-base leading-relaxed text-stone-700">I don’t wait for tasks.
 
             I often bring ideas together with a first version of a solution. For example, I introduced the ORCA framework for more complex projects and started experimenting with AI-supported research.</p>
         </li>
@@ -56,7 +84,8 @@ const testimonials = (await getCollection('testimonials')).sort(
           <h3 class="font-serif text-lg text-stone-900">End-to-end thinking</h3>
           <p class="text-base leading-relaxed text-stone-700">I care about how things actually work, not just how they look.
 
-            I can read HTML and CSS, and I enjoy learning how things are built. Recently, I’ve been exploring vibe coding – this portfolio is one of the results.
+            I can read HTML and CSS, and I enjoy learning how things are built. Recently, I’ve been exploring vibe coding – this portfolio is one of the results.</p>
+        </li>
         <li class="space-y-3">
           <h3 class="font-serif text-lg text-stone-900">UX writing</h3>
           <p class="text-base leading-relaxed text-stone-700">As a former editor, I focus on clarity, structure, and plain language.
@@ -87,7 +116,7 @@ const testimonials = (await getCollection('testimonials')).sort(
           <h3 class="font-serif text-lg text-stone-900">Purpose</h3>
           <p class="text-base leading-relaxed text-stone-700">I want my work to matter.
 
-            I’m looking for problems worth solving and products aligned with my values. For example, I wouldn’t be a good fit for betting platforms or non-sustainable e-commerce.</p>
+            I’m looking for problems worth solving and products aligned with my values. I wouldn’t be a good fit for betting platforms or non-sustainable e-commerce.</p>
         </li>
       </ul>
     </section>
@@ -173,11 +202,68 @@ const testimonials = (await getCollection('testimonials')).sort(
         strengthen collaboration, trust, and communication. From time to time, I also invite colleagues from
         outside the organization, turning meetings into informal meetups.
       </p>
-      <div
-        class="mt-8 flex max-w-3xl aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
-      >
-        Video placeholder
-      </div>
+      {
+        peoplePhotos.length > 0 ? (
+          <ul
+            class="mt-8 grid max-w-3xl grid-flow-dense grid-cols-2 gap-2 auto-rows-[minmax(108px,auto)] sm:gap-3 sm:auto-rows-[minmax(132px,auto)] md:grid-cols-3 md:auto-rows-[minmax(128px,auto)] md:gap-4"
+            role="list"
+            aria-label="Photos from team gatherings and meetups"
+          >
+            {peoplePhotos.map(({ image, portrait }, index) => (
+              <li
+                class:list={[
+                  'people-gallery-tile relative isolate min-w-0 overflow-hidden rounded-lg border border-stone-200 bg-stone-100 shadow-sm',
+                  portrait
+                    ? 'col-span-1 row-span-2 min-h-0'
+                    : 'col-span-2 row-span-2 min-h-0',
+                ]}
+              >
+                <Image
+                  src={image}
+                  alt={`Informal team meetup photo ${index + 1}`}
+                  class="people-gallery-tile-img absolute inset-0 z-0 h-full w-full object-cover"
+                  sizes={
+                    portrait
+                      ? '(max-width: 767px) 45vw, 280px'
+                      : '(max-width: 767px) 100vw, 560px'
+                  }
+                  loading={index < 4 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div
+            class="mt-8 flex max-w-3xl aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
+          >
+            Add images to <code class="mx-1 rounded bg-stone-200 px-1.5 py-0.5 text-sm">src/content/people</code>
+          </div>
+        )
+      }
     </section>
   </article>
 </BaseLayout>
+
+<style>
+  /* Subtle film grain — feTurbulence + soft-light keeps it light, not gritty */
+  .people-gallery-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.09;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .people-gallery-tile::after {
+      opacity: 0.055;
+    }
+  }
+</style>
