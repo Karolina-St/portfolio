@@ -8,6 +8,34 @@ const testimonials = (await getCollection('testimonials')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
+const careerSteps = [
+  {
+    title: 'Biologist',
+    paragraphs: [
+      'Research in a science lab and teaching human physiology.',
+      '→ Built strong curiosity and analytical thinking.',
+    ],
+  },
+  {
+    title: 'Editor',
+    paragraphs: [
+      'Coordinating editor of biology textbooks.',
+      '→ Learned structure, clarity, and visual thinking.',
+    ],
+  },
+  {
+    title: 'Junior Designer',
+    paragraphs: [
+      'UX/Product Design studies at SWPS.',
+      'First projects, freelance work, and web apps.',
+    ],
+  },
+  {
+    title: 'Today',
+    paragraphs: ['Designing products end-to-end — from discovery to delivery.'],
+  },
+] as const;
+
 const peopleImageGlob = import.meta.glob<{ default: ImageMetadata }>(
   '../content/people/*.{png,jpg,jpeg,JPG,JPEG,webp,gif}',
   { eager: true }
@@ -123,29 +151,94 @@ const peoplePhotos = Object.entries(peopleImageGlob)
 
     <section
       class="mt-16 md:mt-24 border-t border-stone-200 pt-16 md:pt-20"
-      aria-labelledby="about-story-heading"
+      aria-labelledby="about-career-heading"
     >
-      <h2 id="about-story-heading" class="font-serif text-2xl md:text-3xl text-stone-900">
-        Story
+      <h2 id="about-career-heading" class="font-serif text-2xl md:text-3xl text-stone-900">
+        Career
       </h2>
       <p class="mt-4 max-w-prose text-base leading-relaxed text-stone-600">
-        Visual showcase of my career — milestones, roles, and moments worth highlighting.
+        A short path from science and publishing into product design — still guided by the same habits of mind.
       </p>
-      <ul class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
-        {
-          ['Chapter one', 'Chapter two', 'Chapter three'].map((label) => (
-            <li class="space-y-3">
-              <p class="text-xs font-medium uppercase tracking-wider text-stone-500">{label}</p>
-              <div
-                class="flex aspect-[4/3] items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
-                aria-hidden="true"
-              >
-                Image placeholder
-              </div>
-            </li>
-          ))
-        }
-      </ul>
+
+      <div class="career-timeline-shell">
+        <svg
+          class="career-timeline__curve"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 300"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            class="career-timeline__curve-path"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M 432 52 C 478 28 528 34 558 52 C 588 70 578 108 548 138 C 518 168 478 188 502 212 C 536 244 628 208 698 196 C 778 182 858 188 898 172 C 918 164 928 156 936 148"
+          />
+        </svg>
+        <ol id="career-timeline" class="career-timeline" role="list">
+          {
+            careerSteps.map((step) => (
+              <li class="career-timeline__item">
+                <div class="career-timeline__marker" aria-hidden="true">
+                  <span class="career-timeline__dot" />
+                </div>
+                <div class="career-timeline__body">
+                  <h3 class="career-timeline__title font-serif text-lg text-stone-900 md:text-xl">
+                    {step.title}
+                  </h3>
+                  <div class="career-timeline__copy mt-3 space-y-2 text-base leading-relaxed text-stone-700">
+                    {step.paragraphs.map((text) => (
+                      <p>{text}</p>
+                    ))}
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <script is:inline>
+        (function () {
+          var root = document.getElementById('career-timeline');
+          if (!root) return;
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+          var items = root.querySelectorAll('.career-timeline__item');
+          if (!items.length) return;
+
+          if (!('IntersectionObserver' in window)) {
+            root.classList.add('career-timeline--initialized');
+            items.forEach(function (el) {
+              el.classList.add('is-inview');
+            });
+            return;
+          }
+
+          var vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+          items.forEach(function (el) {
+            var r = el.getBoundingClientRect();
+            if (r.top < vh * 0.92 && r.bottom > vh * 0.05) el.classList.add('is-inview');
+          });
+
+          root.classList.add('career-timeline--initialized');
+
+          var obs = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) entry.target.classList.add('is-inview');
+              });
+            },
+            { rootMargin: '0px 0px -5% 0px', threshold: 0.06 }
+          );
+
+          items.forEach(function (el) {
+            obs.observe(el);
+          });
+        })();
+      </script>
     </section>
 
     <section
@@ -246,6 +339,183 @@ const peoplePhotos = Object.entries(peopleImageGlob)
 </BaseLayout>
 
 <style>
+  /* Career timeline — mobile: vertical axis + dots; md+: zig-zag copy + curved path */
+  .career-timeline-shell {
+    position: relative;
+    margin-top: 2.75rem;
+  }
+
+  .career-timeline__curve {
+    display: none;
+  }
+
+  .career-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .career-timeline__item {
+    display: grid;
+    grid-template-columns: 0.75rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+    align-items: start;
+    padding-bottom: 2.75rem;
+  }
+
+  .career-timeline__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .career-timeline__marker {
+    position: relative;
+    justify-self: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .career-timeline__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #0c0a09;
+    flex-shrink: 0;
+    margin-top: 0.4em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Segment between dots (mobile only) */
+  .career-timeline__marker::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(0.4em + 0.25rem);
+    bottom: -2.75rem;
+    width: 1px;
+    transform: translateX(-50%);
+    background-color: #e7e5e4;
+  }
+
+  .career-timeline__item:last-child .career-timeline__marker::after {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .career-timeline-shell {
+      margin-top: 3.25rem;
+      max-width: 48rem;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: visible;
+    }
+
+    .career-timeline__curve {
+      display: block;
+      position: absolute;
+      left: -0.75rem;
+      right: -0.75rem;
+      top: 0;
+      bottom: 0;
+      width: auto;
+      height: 100%;
+      min-height: 17rem;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .career-timeline__curve-path {
+      stroke: #a8a29e;
+      stroke-width: 1.75;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .career-timeline {
+      position: relative;
+    }
+
+    /* Straight spine replaced by SVG curve */
+    .career-timeline::before {
+      display: none;
+    }
+
+    .career-timeline__item {
+      grid-template-columns: minmax(0, 1fr) 3.25rem minmax(0, 1fr);
+      column-gap: 0;
+      padding-bottom: 3.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .career-timeline__item:last-child {
+      padding-bottom: 0;
+    }
+
+    .career-timeline__marker {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .career-timeline__marker::after {
+      display: none;
+    }
+
+    /* Nudge dots onto the curved path (horizontal, left-to-right flow) */
+    .career-timeline__item:nth-child(1) .career-timeline__marker {
+      transform: translateX(-1.2rem);
+    }
+
+    .career-timeline__item:nth-child(2) .career-timeline__marker {
+      transform: translateX(1.05rem);
+    }
+
+    .career-timeline__item:nth-child(3) .career-timeline__marker {
+      transform: translateX(-0.55rem);
+    }
+
+    .career-timeline__item:nth-child(4) .career-timeline__marker {
+      transform: translateX(1.65rem);
+    }
+
+    .career-timeline__body {
+      max-width: min(21.5rem, 100%);
+    }
+
+    .career-timeline__item:nth-child(odd) .career-timeline__body {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: end;
+      text-align: right;
+    }
+
+    .career-timeline__item:nth-child(even) .career-timeline__body {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: start;
+      text-align: left;
+    }
+
+    .career-timeline__item:nth-child(odd) .career-timeline__copy {
+      text-align: right;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .career-timeline--initialized .career-timeline__item {
+      opacity: 0.86;
+      transform: translateY(5px);
+      transition:
+        opacity 0.55s ease-out,
+        transform 0.55s ease-out;
+    }
+
+    .career-timeline--initialized .career-timeline__item.is-inview {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Subtle film grain — feTurbulence + soft-light keeps it light, not gritty */
   .people-gallery-tile::after {
     content: '';
@@ -262,6 +532,12 @@ const peoplePhotos = Object.entries(peopleImageGlob)
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .career-timeline--initialized .career-timeline__item {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
     .people-gallery-tile::after {
       opacity: 0.055;
     }
