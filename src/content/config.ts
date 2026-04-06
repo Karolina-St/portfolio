@@ -8,6 +8,7 @@ const projects = defineCollection({
     role: z.string().optional(),
     featured: z.boolean().default(false),
     listOnWorkPage: z.boolean().default(true),
+    caseStudyComingSoon: z.boolean().default(false),
     order: z.number().default(99),
   }),
 });

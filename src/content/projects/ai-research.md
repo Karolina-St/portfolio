@@ -1,8 +1,9 @@
 ---
 title: AI research
-description: Simplifying identity verification and limit tiers for a consumer fintech app serving first-time banking users.
+description: Recently, I’ve been exploring how AI can support UX research. I created a matrix comparing real user insights with synthetic AI personas. (Work in progress)
 role: Product design
 featured: true
+caseStudyComingSoon: true
 order: 4
 ---
 

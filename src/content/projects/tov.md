@@ -1,7 +1,7 @@
 ---
 title: Tone of Voice & AI assistants
 description: Creating a cross-channel communication framework and AI tools to scale consistent language across teams.
-role: Content designer (cross-functional project)
+role: Content design (cross-functional project)
 featured: true
 order: 2
 ---
@@ -41,9 +41,9 @@ I was responsible not only for contributing to the content, but also for editing
 <div class="prose-bordered-group">
   <p>To support adoption, I designed and implemented three AI assistants tailored to different teams. Each assistant included:</p>
   <ul>
-    <li>Tone of Voice guidelines</li>
-    <li>contextual instructions for specific use cases</li>
-    <li>curated examples (good and bad), refined with each team</li>
+    <li>Tone of Voice guidelines,</li>
+    <li>contextual instructions for specific use cases,</li>
+    <li>curated examples (good and bad), refined with each team.</li>
   </ul>
   <p>For the UX team, I extended the assistant with WCAG guidelines, allowing it to support both language and accessibility checks.</p>
   <p>The assistants are now used regularly by multiple teams and help speed up content creation and ensure consistency across the organization. They continue to evolve based on feedback and new needs.</p>

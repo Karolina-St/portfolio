@@ -25,12 +25,16 @@ const projects = (await getCollection('projects'))
                 Project image
               </div>
               <h2 class="font-serif text-2xl text-stone-900">
-                <a
-                  href={`/work/${project.slug}`}
-                  class="hover:opacity-80 transition-opacity"
-                >
-                  {project.data.title}
-                </a>
+                {project.data.caseStudyComingSoon ? (
+                  <span>{project.data.title}</span>
+                ) : (
+                  <a
+                    href={`/work/${project.slug}`}
+                    class="hover:opacity-80 transition-opacity"
+                  >
+                    {project.data.title}
+                  </a>
+                )}
               </h2>
               {project.data.role && (
                 <p class="mt-2 text-xs font-medium uppercase tracking-wider text-stone-500">
@@ -39,12 +43,16 @@ const projects = (await getCollection('projects'))
               )}
               <p class="mt-4 text-stone-700 leading-relaxed">{project.data.description}</p>
               <p class="mt-6">
-                <a
-                  href={`/work/${project.slug}`}
-                  class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
-                >
-                  Read case study
-                </a>
+                {project.data.caseStudyComingSoon ? (
+                  <span class="text-base text-stone-500">Coming soon</span>
+                ) : (
+                  <a
+                    href={`/work/${project.slug}`}
+                    class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+                  >
+                    Read case study
+                  </a>
+                )}
               </p>
             </article>
           </li>
