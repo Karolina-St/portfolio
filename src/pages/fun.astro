@@ -47,10 +47,10 @@ const figmaExamples = [
   description="Side projects, experiments, and things that don’t fit a case study."
 >
   <article class="mx-auto max-w-content px-4 py-16 md:px-6 md:py-24">
-    <header class="max-w-prose">
+    <header class="max-w-prose" data-reveal>
       <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Fun</h1>
       <p class="mt-6 text-base leading-relaxed text-stone-700">
-        Space for things made for fun and exercise
+        Outside of work, I tend to go through different creative phases. Here are a few of them.
       </p>
     </header>
 
@@ -106,10 +106,14 @@ const figmaExamples = [
           tabindex="0"
           class="outline-none"
         >
-          <p class="max-w-prose text-base leading-relaxed text-stone-700">
+          <p class="max-w-prose text-base leading-relaxed text-stone-700" data-reveal>
             UI elements and graphic challenges, done without a specific context.
           </p>
-          <div class="mt-10 flex flex-col gap-24 md:gap-32 lg:gap-40">
+          <div
+            class="mt-10 flex flex-col gap-24 md:gap-32 lg:gap-40"
+            data-reveal-stagger
+            data-parallax="subtle"
+          >
             {
               figmaExamples.map((example, index) => (
                 <section
@@ -157,15 +161,17 @@ const figmaExamples = [
           tabindex="0"
           class="outline-none"
         >
-          <p class="max-w-prose text-base leading-relaxed text-stone-700">
-            Placeholder for data visualization experiments—charts, small tools, and visual explanations of
-            datasets.
-          </p>
-          <div
-            class="mt-10 flex max-w-prose aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
-            aria-hidden="true"
-          >
-            Content placeholder
+          <div data-reveal>
+            <p class="max-w-prose text-base leading-relaxed text-stone-700">
+              Placeholder for data visualization experiments—charts, small tools, and visual explanations of
+              datasets.
+            </p>
+            <div
+              class="mt-10 flex max-w-prose aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
+              aria-hidden="true"
+            >
+              Content placeholder
+            </div>
           </div>
         </div>
 
@@ -177,14 +183,16 @@ const figmaExamples = [
           tabindex="0"
           class="outline-none"
         >
-          <p class="max-w-prose text-base leading-relaxed text-stone-700">
-            Placeholder for personal art, sketches, and other non-digital or non-Figma work.
-          </p>
-          <div
-            class="mt-10 flex max-w-prose aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
-            aria-hidden="true"
-          >
-            Content placeholder
+          <div data-reveal>
+            <p class="max-w-prose text-base leading-relaxed text-stone-700">
+              Placeholder for personal art, sketches, and other non-digital or non-Figma work.
+            </p>
+            <div
+              class="mt-10 flex max-w-prose aspect-video items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-base text-stone-500"
+              aria-hidden="true"
+            >
+              Content placeholder
+            </div>
           </div>
         </div>
       </div>

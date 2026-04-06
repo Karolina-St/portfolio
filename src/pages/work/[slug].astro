@@ -16,7 +16,7 @@ const { Content } = await project.render();
 
 <BaseLayout title={project.data.title} description={project.data.description}>
   <article class="mx-auto max-w-content px-4 py-16 md:px-6 md:py-24">
-    <header class="max-w-prose mb-12 md:mb-16">
+    <header class="max-w-prose mb-12 md:mb-16" data-reveal>
       <p class="text-base text-stone-600 mb-4">
         <a
           href="/work"
@@ -33,10 +33,10 @@ const { Content } = await project.render();
       )}
       <p class="mt-6 text-base leading-relaxed text-stone-700">{project.data.description}</p>
     </header>
-    <div class="prose-portfolio max-w-prose">
+    <div class="prose-portfolio max-w-prose" data-reveal>
       <Content />
     </div>
-    <p class="mt-16 max-w-prose">
+    <p class="mt-16 max-w-prose" data-reveal>
       <a
         href="/work"
         class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"

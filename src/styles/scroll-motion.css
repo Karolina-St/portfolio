@@ -1,0 +1,144 @@
+/**
+ * Scroll motion — editorial-style reveals + optional subtle parallax.
+ *
+ * Usage:
+ *   data-reveal          — fade + slight lift, once when entering viewport
+ *   data-reveal-stagger  — same for direct children, with light stagger
+ *   data-parallax="subtle" — very small translateY tied to scroll (decorative only)
+ *
+ * JS adds: html.scroll-motion--active, .scroll-motion--visible on elements.
+ * prefers-reduced-motion: html.scroll-motion--prefers-reduced (no hide, no parallax JS).
+ */
+
+/* ---- Reveal: inactive until JS arms (avoids hidden content without JS) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal]:not(.scroll-motion--visible) {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal] {
+    transition:
+      opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal].scroll-motion--visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (max-width: 767px) {
+    html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal]:not(.scroll-motion--visible) {
+      transform: translate3d(0, 0.625rem, 0);
+    }
+  }
+
+  /* Stagger: direct children */
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal-stagger] > * {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+    transition:
+      opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal-stagger].scroll-motion--visible > * {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(1) {
+    transition-delay: 0ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(2) {
+    transition-delay: 42ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(3) {
+    transition-delay: 84ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(4) {
+    transition-delay: 126ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(5) {
+    transition-delay: 168ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(6) {
+    transition-delay: 210ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(7) {
+    transition-delay: 252ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(8) {
+    transition-delay: 294ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(9) {
+    transition-delay: 336ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(10) {
+    transition-delay: 378ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(11) {
+    transition-delay: 420ms;
+  }
+  html.scroll-motion--active:not(.scroll-motion--prefers-reduced)
+    [data-reveal-stagger].scroll-motion--visible
+    > *:nth-child(12) {
+    transition-delay: 462ms;
+  }
+
+  @media (max-width: 767px) {
+    html.scroll-motion--active:not(.scroll-motion--prefers-reduced) [data-reveal-stagger]:not(.scroll-motion--visible) > * {
+      transform: translate3d(0, 0.5rem, 0);
+    }
+  }
+}
+
+/* ---- Parallax (transform only; JS sets --scroll-parallax-y) ---- */
+[data-parallax] {
+  --scroll-parallax-y: 0px;
+  transform: translate3d(0, var(--scroll-parallax-y), 0);
+  will-change: transform;
+}
+
+html.scroll-motion--prefers-reduced [data-parallax],
+html:not(.scroll-motion--parallax-on) [data-parallax] {
+  transform: none !important;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-parallax] {
+    transform: none !important;
+    will-change: auto;
+  }
+}

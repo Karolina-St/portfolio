@@ -9,15 +9,11 @@ const projects = (await getCollection('projects')).sort(
 
 <BaseLayout title="Work" description="Case studies and project work — product design portfolio.">
   <div class="mx-auto max-w-content px-4 py-16 md:px-6 md:py-24">
-    <header class="max-w-prose mb-16 md:mb-20">
+    <header class="max-w-prose mb-16 md:mb-20" data-reveal>
       <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">Work</h1>
-      <p class="mt-6 text-base leading-relaxed text-stone-700">
-        Projects spanning health, fintech, and internal platforms. Each write-up summarizes context, approach,
-        and outcomes—replace placeholders with your own narrative and metrics.
-      </p>
     </header>
 
-    <ul class="space-y-16 md:space-y-20">
+    <ul class="space-y-16 md:space-y-20" data-reveal-stagger>
       {
         projects.map((project) => (
           <li>
@@ -60,10 +56,14 @@ const projects = (await getCollection('projects')).sort(
       class="mt-16 md:mt-24 border-t border-stone-200 pt-16 md:pt-20"
       aria-labelledby="failure-stories-heading"
     >
-      <h2 id="failure-stories-heading" class="font-serif text-2xl md:text-3xl text-stone-900">
+      <h2
+        id="failure-stories-heading"
+        class="font-serif text-2xl md:text-3xl text-stone-900"
+        data-reveal
+      >
         Failure stories
       </h2>
-      <ul class="mt-10 md:mt-12 space-y-16 md:space-y-20">
+      <ul class="mt-10 md:mt-12 space-y-16 md:space-y-20" data-reveal-stagger>
         <li>
           <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
             <div

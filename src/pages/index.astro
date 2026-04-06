@@ -15,7 +15,10 @@ const testimonials = (await getCollection('testimonials')).sort(
   title="Home"
   description="Product designer — calm, structured interfaces for fintech, health, and complex domains."
 >
-  <section class="mx-auto max-w-content px-4 md:px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+  <section
+    class="mx-auto max-w-content px-4 md:px-6 pt-16 pb-20 md:pt-24 md:pb-28"
+    data-reveal
+  >
     <p class="font-serif text-3xl md:text-4xl lg:text-[2.5rem] leading-snug text-stone-900 max-w-prose">
       Hello! Cześć!
     </p>
@@ -37,12 +40,18 @@ const testimonials = (await getCollection('testimonials')).sort(
     </p>
   </section>
 
-  <section class="border-t border-stone-200 bg-white">
-    <div class="mx-auto max-w-content px-4 md:px-6 py-20 md:py-28">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-14 md:mb-16">
+  <section class="border-t border-stone-200 bg-white overflow-hidden">
+    <div
+      class="mx-auto max-w-content px-4 md:px-6 py-20 md:py-28"
+      data-parallax="subtle"
+    >
+      <div
+        class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-14 md:mb-16"
+        data-reveal
+      >
         <h2 class="font-serif text-2xl md:text-3xl text-stone-900">Selected work</h2>
       </div>
-      <ul class="grid gap-12 md:gap-16 md:grid-cols-2">
+      <ul class="grid gap-12 md:gap-16 md:grid-cols-2" data-reveal-stagger>
         {
           featuredProjects.map((project) => (
             <li>
@@ -80,7 +89,7 @@ const testimonials = (await getCollection('testimonials')).sort(
           ))
         }
       </ul>
-      <p class="mt-16 md:mt-20">
+      <p class="mt-16 md:mt-20" data-reveal>
         <a
           href="/work"
           class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
@@ -93,10 +102,13 @@ const testimonials = (await getCollection('testimonials')).sort(
 
   <section class="border-t border-stone-200">
     <div class="mx-auto max-w-content px-4 md:px-6 py-20 md:py-28">
-      <h2 class="font-serif text-2xl md:text-3xl text-stone-900 mb-14 md:mb-16">
+      <h2
+        class="font-serif text-2xl md:text-3xl text-stone-900 mb-14 md:mb-16"
+        data-reveal
+      >
         What colleagues say
       </h2>
-      <ul class="grid gap-12 md:gap-14 md:grid-cols-3">
+      <ul class="grid gap-12 md:gap-14 md:grid-cols-3" data-reveal-stagger>
         {
           testimonials.map((t) => (
             <li>
@@ -116,7 +128,7 @@ const testimonials = (await getCollection('testimonials')).sort(
           ))
         }
       </ul>
-      <p class="mt-16 md:mt-20">
+      <p class="mt-16 md:mt-20" data-reveal>
         <a
           href="https://www.linkedin.com/in/karolina-stachowiak/details/recommendations/?detailScreenTabIndex=0"
           target="_blank"

@@ -1,21 +1,59 @@
 ---
-title: Clinical records platform
-description: End-to-end redesign of clinician workflows for a regional health network, improving task completion time and reducing training burden.
-role: Lead product designer
+title: Bundled services configurator
+description: Designing a mobile-first configurator that helps users build and understand bundled telecom offers.
+role: Product design
 featured: true
 order: 1
 ---
+### TL;DR
+
+A mobile-first configurator that helps users build bundled offers step by step.
+
+→ Designed with real pricing logic and business constraints.  
+→ Validated in user research (12 IDI).  
+→ One of the best-converting lead flows on the platform.
 
 ## Context
 
-The existing system had grown over a decade of incremental updates. Clinicians relied on workarounds and informal training to get their work done.
+Although the company offers multiple services that become cheaper when combined, there was no clear way for users to understand what a personalized offer actually looks like. Instead, users were presented with static pricing tables for individual services (voice, internet, TV), which made it difficult to grasp the value of bundling.
+
+Together with my team lead, I proposed a new way of presenting the offer – as a configurator that lets users build their own bundle step by step. I was responsible for research, interaction design, and prototyping.
+
+With over 90% of users on mobile, I took a mobile-first approach.
 
 ## Approach
 
-We paired contextual inquiry with iterative prototyping in the hospital environment. The team aligned on a small set of jobs-to-be-done and designed navigation and forms around those flows rather than legacy module boundaries.
+We started by mapping all possible service combinations and pricing dependencies in FigJam. This helped us understand the complexity of the system and identify meaningful user flows.
+
+I explored several design directions and, after internal workshops, prepared a prototype for testing.
+
+Based on internal data, we defined a target group and scheduled user research with an external agency. We conducted 12 in-depth interviews (IDI). The research brought valuable insights, especially around how users understand pricing, order of decisions, and the feeling of control.
+
+Based on the findings, we refined the flow and interactions before implementation.
+
+Despite tight deadlines, we worked closely with engineering to deliver a functional version for the new offer launch.
+
+## Challenges
+
+<div class="prose-challenge-pair">
+  <p>One key constraint emerged late in the process: the order of adding services had to be fixed due to business logic.</p>
+  <p>→ To address this, we introduced a “step 0”, where users select which services they are interested in. The system then guides them through a predefined order, while still giving a sense of control.</p>
+</div>
+
+<div class="prose-challenge-pair">
+  <p>Another limitation was technical: users could not complete the purchase directly in the configurator.</p>
+  <p>→ Instead, the flow ends with a lead form, where selected services are passed to a consultant. This required us to carefully design expectations and make the transition feel intentional rather than broken.</p>
+</div>
+
+<div class="prose-challenge-pair">
+  <p>Another challenge was legal approval. The offer had to present detailed pricing and cost information in a way that satisfied legal requirements, sometimes at the expense of clarity.</p>
+  <p>→ We worked through multiple rounds of discussions and copy revisions to find a balance between compliance and readability. This became one of the key design tasks in the project: making dense information feel clear enough for users, while still meeting legal expectations.</p>
+</div>
 
 ## Outcomes
 
-- Clearer hierarchy and progressive disclosure for high-stakes tasks
-- Consistent patterns for alerts and confirmations, reducing error anxiety
-- A design system slice adopted by engineering for ongoing delivery
+The configurator became one of the best-performing lead-generation tools on the platform.
+
+It improved clarity of the offer, helped users understand bundle value, and reduced reliance on static pricing tables.
+
+(Final metrics to be added.)

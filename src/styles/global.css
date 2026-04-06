@@ -4,6 +4,7 @@
 @import '@fontsource/libre-baskerville/400.css';
 @import '@fontsource/libre-baskerville/700.css';
 @import '@fontsource/libre-baskerville/400-italic.css';
+@import './scroll-motion.css';
 
 @tailwind base;
 @tailwind components;
@@ -37,5 +38,17 @@
   }
   .prose-portfolio a {
     @apply text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-800 transition-colors;
+  }
+
+  /* Challenge + solution (→) groups in case studies */
+  .prose-portfolio .prose-challenge-pair {
+    @apply mb-8 border-l pl-5;
+    border-left-color: rgba(197, 196, 196, 1);
+  }
+  .prose-portfolio .prose-challenge-pair p {
+    @apply mb-0;
+  }
+  .prose-portfolio .prose-challenge-pair p + p {
+    @apply mt-3;
   }
 }
