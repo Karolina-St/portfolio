@@ -7,6 +7,7 @@ const projects = defineCollection({
     description: z.string(),
     role: z.string().optional(),
     featured: z.boolean().default(false),
+    listOnWorkPage: z.boolean().default(true),
     order: z.number().default(99),
   }),
 });

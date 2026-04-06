@@ -3,6 +3,7 @@ title: Internal design operations
 description: Lightweight rituals and documentation so a growing design team could ship consistently without heavy tooling.
 role: IC & facilitator
 featured: false
+listOnWorkPage: false
 order: 10
 ---
 

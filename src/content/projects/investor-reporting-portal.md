@@ -3,6 +3,7 @@ title: Investor reporting portal
 description: A secure portal for quarterly metrics and commentary, replacing scattered PDFs and email threads for institutional clients.
 role: Design lead
 featured: true
+listOnWorkPage: false
 order: 3
 ---
 
