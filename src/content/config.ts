@@ -24,7 +24,19 @@ const testimonials = defineCollection({
   }),
 });
 
+const failureStories = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    role: z.string().optional(),
+    order: z.number().default(99),
+    caseStudyComingSoon: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   projects,
   testimonials,
+  failureStories,
 };

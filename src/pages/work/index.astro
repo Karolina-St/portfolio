@@ -5,6 +5,10 @@ import { getCollection } from 'astro:content';
 const projects = (await getCollection('projects'))
   .filter((p) => p.data.listOnWorkPage)
   .sort((a, b) => a.data.order - b.data.order);
+
+const failureStories = (await getCollection('failureStories')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <BaseLayout title="Work" description="Case studies and project work — product design portfolio.">
@@ -72,24 +76,50 @@ const projects = (await getCollection('projects'))
         Failure stories
       </h2>
       <ul class="mt-10 md:mt-12 space-y-16 md:space-y-20" data-reveal-stagger>
-        <li>
-          <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
-            <div
-              class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
-              aria-hidden="true"
-            >
-              Project image
-            </div>
-            <h3 class="font-serif text-2xl text-stone-900">Placeholder title</h3>
-            <p class="mt-4 text-stone-700 leading-relaxed">
-              Short summary of what went wrong, what you learned, and how it changed how you work—replace with
-              your own story.
-            </p>
-            <p class="mt-6">
-              <span class="text-base text-stone-500">Case study coming soon</span>
-            </p>
-          </article>
-        </li>
+        {
+          failureStories.map((story) => (
+            <li>
+              <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
+                <div
+                  class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
+                  aria-hidden="true"
+                >
+                  Project image
+                </div>
+                <h3 class="font-serif text-2xl text-stone-900">
+                  {story.data.caseStudyComingSoon ? (
+                    <span>{story.data.title}</span>
+                  ) : (
+                    <a
+                      href={`/work/failure/${story.slug}`}
+                      class="hover:opacity-80 transition-opacity"
+                    >
+                      {story.data.title}
+                    </a>
+                  )}
+                </h3>
+                {story.data.role && (
+                  <p class="mt-2 text-xs font-medium uppercase tracking-wider text-stone-500">
+                    {story.data.role}
+                  </p>
+                )}
+                <p class="mt-4 text-stone-700 leading-relaxed">{story.data.description}</p>
+                <p class="mt-6">
+                  {story.data.caseStudyComingSoon ? (
+                    <span class="text-base text-stone-500">Coming soon</span>
+                  ) : (
+                    <a
+                      href={`/work/failure/${story.slug}`}
+                      class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+                    >
+                      Read case study
+                    </a>
+                  )}
+                </p>
+              </article>
+            </li>
+          ))
+        }
       </ul>
     </section>
   </div>

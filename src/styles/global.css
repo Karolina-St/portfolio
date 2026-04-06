@@ -40,6 +40,22 @@
     @apply text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-800 transition-colors;
   }
 
+  /* Yellow marker–style highlight (reusable in markdown via <span class="prose-marker">…</span>) */
+  .prose-portfolio .prose-marker {
+    padding: 0.08em 0.14em;
+    margin: 0 -0.06em;
+    border-radius: 0.12em;
+    background: linear-gradient(
+      104deg,
+      rgba(255, 237, 74, 0.72) 0%,
+      rgba(254, 240, 138, 0.78) 45%,
+      rgba(250, 204, 21, 0.55) 100%
+    );
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    box-shadow: 0 0.06em 0 rgba(234, 179, 8, 0.25);
+  }
+
   /* Challenge + solution (→) groups in case studies */
   .prose-portfolio .prose-challenge-pair {
     @apply mb-8 border-l pl-5;

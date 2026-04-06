@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const stories = await getCollection('failureStories');
+  return stories.map((story) => ({
+    params: { slug: story.slug },
+    props: { story },
+  }));
+}
+
+const { story } = Astro.props;
+const { Content } = await story.render();
+---
+
+<BaseLayout title={story.data.title} description={story.data.description}>
+  <article class="mx-auto max-w-content px-4 py-16 md:px-6 md:py-24">
+    <header class="max-w-prose mb-12 md:mb-16" data-reveal>
+      <p class="text-base text-stone-600 mb-4">
+        <a
+          href="/work"
+          class="underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+        >
+          Work
+        </a>
+        <span class="mx-2 text-stone-400">/</span>
+        <a
+          href="/work#failure-stories-heading"
+          class="underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition-colors"
+        >
+          Failure stories
+        </a>
+        <span class="mx-2 text-stone-400">/</span>
+        <span>{story.data.title}</span>
+      </p>
+      <h1 class="font-serif text-3xl md:text-4xl text-stone-900 leading-tight">{story.data.title}</h1>
+      {story.data.role && (
+        <p class="mt-4 text-xs font-medium uppercase tracking-wider text-stone-500">{story.data.role}</p>
+      )}
+      <p class="mt-6 text-base leading-relaxed text-stone-700">{story.data.description}</p>
+    </header>
+    <div class="prose-portfolio max-w-prose" data-reveal>
+      <Content />
+    </div>
+    <p class="mt-16 max-w-prose" data-reveal>
+      <a
+        href="/work#failure-stories-heading"
+        class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+      >
+        ← Failure stories
+      </a>
+    </p>
+  </article>
+</BaseLayout>
