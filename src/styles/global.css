@@ -51,4 +51,13 @@
   .prose-portfolio .prose-challenge-pair p + p {
     @apply mt-3;
   }
+
+  /* Grouped callout (e.g. related paragraphs + list) */
+  .prose-portfolio .prose-bordered-group {
+    @apply mb-6 border-l pl-5;
+    border-left-color: rgba(197, 196, 196, 1);
+  }
+  .prose-portfolio .prose-bordered-group > :last-child {
+    @apply mb-0;
+  }
 }
