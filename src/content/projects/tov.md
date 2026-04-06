@@ -1,5 +1,5 @@
 ---
-title: Payments onboarding
+title: Tone of Voice
 description: Simplifying identity verification and limit tiers for a consumer fintech app serving first-time banking users.
 role: Product design
 featured: true

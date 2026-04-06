@@ -53,7 +53,7 @@ const testimonials = (await getCollection('testimonials')).sort(
       </div>
       <ul class="grid gap-12 md:gap-16 md:grid-cols-2" data-reveal-stagger>
         {
-          featuredProjects.map((project) => (
+          featuredProjects.slice(0, 2).map((project) => (
             <li>
               <article>
                 <div
