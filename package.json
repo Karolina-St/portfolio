@@ -20,6 +20,7 @@
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/libre-baskerville": "^5.2.10",
     "astro": "^4.16.18",
+    "posthog-js": "^1.365.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-vertical-timeline-component": "^4.0.0",
