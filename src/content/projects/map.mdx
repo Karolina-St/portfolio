@@ -5,6 +5,10 @@ role: Product design
 featured: true
 order: 3
 ---
+
+import ImageLightbox from '../../components/ImageLightbox.astro';
+import orcaMap from '../case-map/orca.png';
+
 ### TL;DR
 
 An accessible store locator redesigned with a system-first approach.
@@ -32,6 +36,13 @@ I mapped:
 - important attributes.
 
 This helped present the design in a concise and structured way, making it easier to understand and implement.
+
+<ImageLightbox
+  src={orcaMap}
+  alt="ORCA map diagram: objects, relationships, CTAs, and attributes for the store locator"
+  caption="ORCA map. Click to zoom."
+  id="map-orca"
+/>
 
 ## Outcomes
 

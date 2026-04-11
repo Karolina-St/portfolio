@@ -1,0 +1,140 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** Shown under the thumbnail (14px / secondary tone). */
+  caption?: string;
+  /** Stable id for aria-controls; defaults from alt. */
+  id?: string;
+}
+
+const { src, alt, caption, id: instanceId } = Astro.props;
+
+const sanitizeId = (s: string) =>
+  s
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9_-]/g, '')
+    .slice(0, 48) || 'image';
+
+const uid = instanceId ?? sanitizeId(alt);
+
+const full = await getImage({
+  src,
+  width: Math.min(2400, src.width),
+});
+
+const dialogId = `${uid}-dialog`;
+---
+
+<div class="image-lightbox not-prose my-8 max-w-full" data-image-lightbox>
+  <button
+    type="button"
+    class="group block w-full max-w-full cursor-zoom-in border-0 bg-transparent p-0 text-left outline-none ring-stone-400 focus-visible:ring-2 focus-visible:ring-offset-2"
+    data-lightbox-trigger
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls={dialogId}
+    aria-label={`Open image: ${alt}`}
+  >
+    <Image
+      src={src}
+      alt={alt}
+      widths={[672, 900, 1200, 1600]}
+      sizes="(max-width: 768px) 100vw, 42rem"
+      class="w-full max-h-[min(70vh,520px)] rounded-lg object-contain shadow-[0_1px_2px_0_rgba(0,0,0,0.05),0_4px_12px_0_rgba(0,0,0,0.15)] transition-transform duration-300 ease-out will-change-transform group-hover:scale-[1.02]"
+      loading="lazy"
+      decoding="async"
+    />
+  </button>
+  {
+    caption && (
+      <p class="mt-2 text-sm leading-relaxed text-stone-600">{caption}</p>
+    )
+  }
+
+  <dialog
+    id={dialogId}
+    class="image-lightbox-dialog m-0 h-full max-h-none w-full max-w-none border-0 bg-transparent p-0 text-stone-100 outline-none"
+    data-lightbox-dialog
+    aria-modal="true"
+    aria-label={alt}
+  >
+    <div
+      class="image-lightbox-panel relative flex h-full min-h-[100dvh] w-full flex-col"
+      data-lightbox-panel
+    >
+      <div
+        class="image-lightbox-scrim absolute inset-0 bg-stone-950/80 backdrop-blur-[2px] transition-[opacity,backdrop-filter] duration-300 ease-out"
+        data-lightbox-scrim
+        aria-hidden="true"
+      >
+      </div>
+
+      <button
+        type="button"
+        class="image-lightbox-close absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-stone-950/40 text-2xl font-light leading-none text-stone-200 transition-colors hover:bg-stone-950/55 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-300"
+        data-lightbox-close
+        aria-label="Close fullscreen image"
+      >
+        ×
+      </button>
+
+      <div
+        class="image-lightbox-viewport relative z-10 flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 pb-10 pt-14 md:px-10 md:pb-14 md:pt-16 pointer-events-none"
+      >
+        <div
+          class="image-lightbox-pan pointer-events-auto max-h-full max-w-full origin-center touch-none"
+          data-lightbox-pan
+        >
+          <img
+            src={full.src}
+            alt={alt}
+            width={full.attributes?.width}
+            height={full.attributes?.height}
+            class="image-lightbox-img max-h-[85dvh] max-w-full select-none object-contain"
+            data-lightbox-img
+            draggable="false"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  import { initImageLightboxesOnReady } from '../scripts/image-lightbox';
+  initImageLightboxesOnReady();
+</script>
+
+<style>
+  .image-lightbox-dialog::backdrop {
+    background: transparent;
+  }
+
+  .image-lightbox-panel {
+    opacity: 0;
+    transform: scale(0.98);
+    transition:
+      opacity 280ms ease-out,
+      transform 280ms ease-out;
+  }
+
+  .image-lightbox-panel.is-open {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .image-lightbox-panel:not(.is-open) .image-lightbox-scrim {
+    opacity: 0;
+  }
+
+  .image-lightbox-panel.is-open .image-lightbox-scrim {
+    opacity: 1;
+  }
+</style>
