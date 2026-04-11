@@ -7,6 +7,10 @@ const links = [
   { href: '/fun', label: 'Fun' },
   { href: '/contact', label: 'Contact' },
 ];
+
+/** Public Google Drive file; uc export triggers browser download when file is shared as “Anyone with the link”. */
+const cvHref =
+  'https://drive.google.com/uc?export=download&id=1uFMg4rJnwpnUkk4eGswFsz4HePgVLstp';
 ---
 
 <header class="border-b border-stone-200/80 bg-stone-50/90 backdrop-blur-sm sticky top-0 z-50">
@@ -40,9 +44,9 @@ const links = [
             }
             <li class="border-t border-stone-200 pt-2 mt-1">
               <a
-                href="/cv.pdf"
-                download
+                href={cvHref}
                 class="block py-2 text-base text-stone-600 hover:text-stone-900 transition-colors"
+                rel="noopener noreferrer"
               >
                 CV
               </a>
@@ -64,9 +68,9 @@ const links = [
         }
         <li>
           <a
-            href="/cv.pdf"
-            download
+            href={cvHref}
             class="text-base font-medium text-stone-600 hover:text-stone-900 transition-colors"
+            rel="noopener noreferrer"
           >
             CV
           </a>

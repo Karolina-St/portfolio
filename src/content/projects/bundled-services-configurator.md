@@ -31,7 +31,7 @@ Based on internal data, we defined a target group and scheduled user research wi
 
 Based on the findings, we refined the flow and interactions before implementation.
 
-Despite tight deadlines, we worked closely with engineering to deliver a functional version for the new offer launch.
+Despite tight deadlines, we worked closely with an engineering team to deliver a functional version for the new offer launch.
 
 ## Challenges
 
@@ -41,7 +41,7 @@ Despite tight deadlines, we worked closely with engineering to deliver a functio
 </div>
 
 <div class="prose-challenge-pair">
-  <p>Due to technical limitation, users could not complete the purchase directly in the configurator.</p>
+  <p>Due to technical limitations, users could not complete the purchase directly in the configurator.</p>
   <p>→ Instead, the flow ends with a lead form, where selected services are passed to a consultant. This required us to carefully design expectations and make the transition feel <span class="prose-marker">intentional rather than broken</span>.</p>
 </div>
 
