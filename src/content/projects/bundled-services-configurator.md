@@ -4,7 +4,7 @@ description: Designing a mobile-first configurator that helps users build and un
 role: Product design
 featured: true
 order: 1
-thumbnail: ../thumbnails/t-configurator.png
+thumbnail: ../thumbnails/tk-configurator.png
 ---
 ### TL;DR
 

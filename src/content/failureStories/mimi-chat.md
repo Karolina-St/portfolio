@@ -3,6 +3,7 @@ title: Mimi chat
 description: A chat app for monday.com that didn’t make it to the market – and what I learned from it.
 role: Product design, Product owner
 order: 1
+thumbnail: ../thumbnails/tk-chat.png
 ---
 
 ### TL;DR

@@ -23,25 +23,18 @@ const failureStories = (await getCollection('failureStories')).sort(
         projects.map((project) => (
           <li>
             <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
-              {project.data.thumbnail ? (
-                <div class="mb-5 aspect-video w-full overflow-hidden rounded-lg">
+              {project.data.thumbnail && (
+                <div class="mb-5 w-full overflow-hidden rounded-lg">
                   <Image
                     src={project.data.thumbnail}
                     alt=""
-                    class="h-full w-full object-cover"
+                    class="h-auto w-full"
                     loading="lazy"
                     decoding="async"
                     quality={95}
                     widths={[672, 1008, 1344, 1600]}
                     sizes="(min-width: 768px) 42rem, 100vw"
                   />
-                </div>
-              ) : (
-                <div
-                  class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
-                  aria-hidden="true"
-                >
-                  Project image
                 </div>
               )}
               <h2 class="font-serif text-2xl text-stone-900">
@@ -96,12 +89,27 @@ const failureStories = (await getCollection('failureStories')).sort(
           failureStories.map((story) => (
             <li>
               <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
-                <div
-                  class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
-                  aria-hidden="true"
-                >
-                  Project image
-                </div>
+                {story.data.thumbnail ? (
+                  <div class="mb-5 w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={story.data.thumbnail}
+                      alt=""
+                      class="h-auto w-full"
+                      loading="lazy"
+                      decoding="async"
+                      quality={95}
+                      widths={[672, 1008, 1344, 1600]}
+                      sizes="(min-width: 768px) 42rem, 100vw"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
+                    aria-hidden="true"
+                  >
+                    Project image
+                  </div>
+                )}
                 <h3 class="font-serif text-2xl text-stone-900">
                   {story.data.caseStudyComingSoon ? (
                     <span>{story.data.title}</span>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
 const featuredProjects = (await getCollection('projects'))
@@ -56,12 +57,27 @@ const testimonials = (await getCollection('testimonials')).sort(
           featuredProjects.slice(0, 2).map((project) => (
             <li>
               <article>
-                <div
-                  class="mb-4 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
-                  aria-hidden="true"
-                >
-                  Project image
-                </div>
+                {project.data.thumbnail ? (
+                  <div class="mb-4 w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={project.data.thumbnail}
+                      alt=""
+                      class="h-auto w-full"
+                      loading="lazy"
+                      decoding="async"
+                      quality={95}
+                      widths={[672, 1008, 1344, 1600]}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    class="mb-4 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
+                    aria-hidden="true"
+                  >
+                    Project image
+                  </div>
+                )}
                 <h3 class="font-serif text-xl text-stone-900">
                   {project.data.caseStudyComingSoon ? (
                     <span>{project.data.title}</span>

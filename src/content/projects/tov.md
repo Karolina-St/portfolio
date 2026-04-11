@@ -4,6 +4,7 @@ description: Creating a cross-channel communication framework and AI tools to sc
 role: Content design (cross-functional project)
 featured: true
 order: 2
+thumbnail: ../thumbnails/t-tov2.png
 ---
 ### TL;DR
 
