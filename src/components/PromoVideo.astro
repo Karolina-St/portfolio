@@ -1,0 +1,185 @@
+---
+interface Props {
+  src: string;
+  /** Visible caption and primary accessible name for the video. */
+  description: string;
+}
+
+const { src, description } = Astro.props;
+---
+
+<div class="promo-video not-prose my-8" data-promo-video>
+  <figure class="m-0">
+    <div
+      class="relative aspect-video w-full overflow-hidden rounded-lg bg-stone-950"
+      role="group"
+      aria-label={`${description}: video player`}
+    >
+      <video
+        class="h-full w-full object-contain"
+        preload="metadata"
+        playsinline
+        aria-label={description}
+      >
+        <source src={src} type="video/quicktime" />
+        <a
+          href={src}
+          class="text-sm text-stone-300 underline underline-offset-2 hover:text-white"
+        >
+          Download the promo video (MOV)
+        </a>
+      </video>
+      <div
+        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/40 to-transparent"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 flex items-center gap-2 p-3 md:p-3.5"
+        role="toolbar"
+        aria-label={`${description}: playback controls`}
+      >
+        <button
+          type="button"
+          data-promo-toggle
+          class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-md text-stone-900 shadow-sm transition-colors hover:bg-white/95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 bg-white/90 backdrop-blur-sm"
+        >
+          <span data-icon-play aria-hidden="true">
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 6.5v11l9-5.5-9-5.5Z"></path>
+            </svg>
+          </span>
+          <span data-icon-pause class="hidden" aria-hidden="true">
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+            >
+              <path d="M9 7v10"></path>
+              <path d="M15 7v10"></path>
+            </svg>
+          </span>
+        </button>
+        <button
+          type="button"
+          data-promo-mute
+          class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-md text-stone-900 shadow-sm transition-colors hover:bg-white/95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 bg-white/90 backdrop-blur-sm"
+        >
+          <span data-icon-sound-on aria-hidden="true">
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M11 5 6 9H4v6h2l5 4V5Z"></path>
+              <path d="M16 9a4 4 0 0 1 0 6"></path>
+              <path d="M18 7a7 7 0 0 1 0 10"></path>
+            </svg>
+          </span>
+          <span data-icon-sound-off class="hidden" aria-hidden="true">
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M11 5 6 9H4v6h2l5 4V5Z"></path>
+              <path d="m17 9 4 4"></path>
+              <path d="m21 9-4 4"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <figcaption class="mt-3 text-center text-sm text-stone-600">
+      {description}
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  function bindPromoVideos() {
+    document.querySelectorAll('[data-promo-video]').forEach((root) => {
+      if (!(root instanceof HTMLElement) || root.dataset.promoBound) return;
+      root.dataset.promoBound = 'true';
+      const video = root.querySelector('video');
+      const toggleBtn = root.querySelector('[data-promo-toggle]');
+      const muteBtn = root.querySelector('[data-promo-mute]');
+      const playIcon = root.querySelector('[data-icon-play]');
+      const pauseIcon = root.querySelector('[data-icon-pause]');
+      const soundOnIcon = root.querySelector('[data-icon-sound-on]');
+      const soundOffIcon = root.querySelector('[data-icon-sound-off]');
+      if (
+        !video ||
+        !toggleBtn ||
+        !muteBtn ||
+        !playIcon ||
+        !pauseIcon ||
+        !soundOnIcon ||
+        !soundOffIcon
+      )
+        return;
+
+      const v = video;
+      const tb = toggleBtn;
+      const mb = muteBtn;
+      const pi = playIcon;
+      const pa = pauseIcon;
+      const so = soundOnIcon;
+      const sf = soundOffIcon;
+
+      const desc = v.getAttribute('aria-label') ?? 'Video';
+
+      function syncPlayPause() {
+        const paused = v.paused;
+        pi.classList.toggle('hidden', !paused);
+        pa.classList.toggle('hidden', paused);
+        tb.setAttribute('aria-label', paused ? `Play: ${desc}` : `Pause: ${desc}`);
+      }
+
+      function syncMute() {
+        const muted = v.muted;
+        so.classList.toggle('hidden', muted);
+        sf.classList.toggle('hidden', !muted);
+        mb.setAttribute('aria-label', muted ? `Unmute: ${desc}` : `Mute: ${desc}`);
+      }
+
+      syncPlayPause();
+      syncMute();
+
+      tb.addEventListener('click', () => {
+        if (v.paused) void v.play();
+        else v.pause();
+      });
+
+      mb.addEventListener('click', () => {
+        v.muted = !v.muted;
+      });
+
+      v.addEventListener('play', syncPlayPause);
+      v.addEventListener('pause', syncPlayPause);
+      v.addEventListener('ended', syncPlayPause);
+      v.addEventListener('volumechange', syncMute);
+    });
+  }
+
+  bindPromoVideos();
+  document.addEventListener('astro:page-load', bindPromoVideos);
+</script>

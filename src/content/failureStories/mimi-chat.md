@@ -1,5 +1,5 @@
 ---
-title: Mimi chat
+title: Mimi Chat
 description: A chat app for monday.com that didn’t make it to the market – and what I learned from it.
 role: Product design, Product owner
 order: 1
@@ -10,9 +10,9 @@ thumbnail: ../thumbnails/tk-chat.png
 
 A chat app that missed the market window.
 
-→ Strong concept, but late timing  
-→ Lost to an already published competitor  
-→ Key lesson: speed and timing matter as much as execution
+→ Strong concept, but late timing.  
+→ Lost to an already published competitor.  
+→ Key lesson: speed and timing matter as much as execution.
 
 ## Context
 
@@ -30,13 +30,13 @@ We returned to the project in early 2026, preparing it for submission.
 
 Within a few hours, the app was rejected.
 
-The reason was simple: a very similar product had already been published months earlier — with strong adoption and positive reviews. Despite a solid technical foundation, the product was no longer differentiated enough to succeed.
+The reason was simple: a very similar product had already been published months earlier – with strong adoption and positive reviews. Despite a solid technical foundation, the product was no longer differentiated enough to succeed.
 
 ## What I learned
 
 Shipping matters more than perfection.
 
-Delaying a product — especially in a fast-moving space — can mean losing the opportunity entirely.
+Delaying a product – especially in a fast-moving space – can mean losing the opportunity entirely.
 
 I also learned the importance of continuously monitoring the competitive landscape.  
 I wasn’t prepared for how quickly the situation had changed.
