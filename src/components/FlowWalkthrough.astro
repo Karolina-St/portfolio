@@ -1,0 +1,372 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+export interface FlowWalkthroughStep {
+  step: number;
+  title: string;
+  caption: string;
+  image: ImageMetadata;
+  alt: string;
+}
+
+interface Props {
+  id: string;
+  sectionTitle?: string;
+  steps: FlowWalkthroughStep[];
+}
+
+const { id: baseId, sectionTitle, steps } = Astro.props;
+
+if (!steps?.length) {
+  throw new Error('FlowWalkthrough: at least one step is required.');
+}
+
+const headingId = `${baseId}-heading`;
+const captionsForScript = steps.map((s) => ({ title: s.title, caption: s.caption }));
+
+const fullImages = await Promise.all(
+  steps.map((s) =>
+    getImage({
+      src: s.image,
+      width: Math.min(2400, s.image.width),
+    })
+  )
+);
+---
+
+<section
+  class="flow-walkthrough not-prose my-10 md:my-14"
+  data-flow-walkthrough={baseId}
+  aria-labelledby={sectionTitle ? headingId : undefined}
+  aria-label={!sectionTitle ? 'Product walkthrough steps' : undefined}
+>
+  {
+    sectionTitle && (
+      <h3 id={headingId} class="font-serif text-xl text-stone-900 md:text-2xl mb-6 md:mb-8">
+        {sectionTitle}
+      </h3>
+    )
+  }
+
+  <div class="flex flex-col gap-4">
+    <div
+      role="tablist"
+      aria-label="Walkthrough steps"
+      class="flex w-full justify-start gap-2 overflow-x-auto overflow-y-hidden pb-1 -mx-1 px-1 text-left snap-x snap-mandatory md:flex-wrap md:overflow-visible md:snap-none"
+    >
+      {
+        steps.map((s, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`${baseId}-tab-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`${baseId}-panel-${i}`}
+            tabindex={i === 0 ? 0 : -1}
+            data-wt-tab
+            data-wt-index={i}
+            data-wt-selected={i === 0 ? 'true' : 'false'}
+            class="flow-wt-tab shrink-0 snap-start rounded-md border border-transparent px-3 py-2.5 text-left text-sm transition-colors md:px-4"
+          >
+            <span class="block font-sans text-xs font-medium uppercase tracking-wider text-stone-500">
+              Step {s.step}
+            </span>
+            <span class="mt-0.5 block font-medium text-stone-900">{s.title}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <p
+      class="text-left text-sm leading-relaxed text-stone-700 md:text-base max-w-prose"
+      data-wt-caption
+    >
+      {steps[0].caption}
+    </p>
+
+    <div
+      class="relative w-full min-h-[min(56vw,420px)] md:min-h-[min(48vw,480px)]"
+      data-wt-swipe
+    >
+      {
+        steps.map((s, i) => (
+          <div
+            role="tabpanel"
+            id={`${baseId}-panel-${i}`}
+            aria-labelledby={`${baseId}-tab-${i}`}
+            tabindex="-1"
+            data-wt-panel
+            data-wt-index={i}
+            class:list={[
+              'flow-wt-panel rounded-lg bg-stone-100 transition-opacity duration-300 ease-out motion-reduce:transition-none',
+              i === 0
+                ? 'relative z-10 opacity-100'
+                : 'absolute inset-0 z-0 opacity-0 pointer-events-none',
+            ]}
+          >
+            <div class="flex h-full min-h-[inherit] w-full items-center justify-center p-1 sm:p-2">
+              <button
+                type="button"
+                class="group block h-full w-full max-w-full cursor-zoom-in border-0 bg-transparent p-0 text-left outline-none ring-stone-400 focus-visible:ring-2 focus-visible:ring-offset-2"
+                data-wt-lb-open
+                data-wt-lb-index={i}
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls={`${baseId}-walkthrough-lb`}
+                aria-label={`Open zoomed gallery: ${s.alt}`}
+              >
+                <Image
+                  src={s.image}
+                  alt={s.alt}
+                  class="h-auto max-h-[min(70vh,520px)] w-full rounded-md object-contain shadow-sm transition-transform duration-300 ease-out will-change-transform group-hover:scale-[1.02]"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  quality={92}
+                  widths={[672, 900, 1200, 1600]}
+                  sizes="(max-width: 768px) 100vw, 42rem"
+                />
+              </button>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <dialog
+      id={`${baseId}-walkthrough-lb`}
+      class="flow-wt-lb-dialog m-0 h-full max-h-none w-full max-w-none border-0 bg-transparent p-0 text-stone-100 outline-none"
+      data-wt-lb-dialog
+      aria-modal="true"
+      aria-label="Walkthrough image gallery"
+    >
+      <div
+        class="flow-wt-lb-panel relative flex h-full min-h-[100dvh] w-full flex-col"
+        data-wt-lb-panel
+      >
+        <div
+          class="flow-wt-lb-scrim absolute inset-0 bg-stone-950/80 backdrop-blur-[2px] transition-[opacity,backdrop-filter] duration-300 ease-out"
+          data-wt-lb-scrim
+          aria-hidden="true"
+        >
+        </div>
+
+        <button
+          type="button"
+          class="flow-wt-lb-close absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-stone-950/40 text-2xl font-light leading-none text-stone-200 transition-colors hover:bg-stone-950/55 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-300"
+          data-wt-lb-close
+          aria-label="Close gallery"
+        >
+          ×
+        </button>
+
+        <p
+          class="pointer-events-none absolute left-1/2 top-4 z-30 -translate-x-1/2 text-sm tabular-nums text-stone-300 md:top-5"
+          data-wt-lb-counter
+          aria-live="polite"
+        >
+          1 / {steps.length}
+        </p>
+
+        <button
+          type="button"
+          class="flow-wt-lb-prev absolute left-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-stone-950/40 text-2xl font-light leading-none text-stone-200 transition-colors hover:bg-stone-950/55 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-300 md:left-4"
+          data-wt-lb-prev
+          aria-label="Previous image"
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          class="flow-wt-lb-next absolute right-2 top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-stone-950/40 text-2xl font-light leading-none text-stone-200 transition-colors hover:bg-stone-950/55 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-300 md:right-4"
+          data-wt-lb-next
+          aria-label="Next image"
+        >
+          ›
+        </button>
+
+        <div
+          class="flow-wt-lb-viewport relative z-10 min-h-0 w-full flex-1 overflow-hidden px-4 pb-10 pt-14 md:px-10 md:pb-14 md:pt-16"
+          data-wt-lb-viewport
+        >
+          {
+            steps.map((s, i) => (
+              <div
+                class:list={[
+                  'flow-wt-lb-slide absolute inset-0 flex items-center justify-center px-4 pb-10 pt-14 md:px-10 md:pb-14 md:pt-16',
+                  i === 0 ? 'opacity-100' : 'pointer-events-none opacity-0',
+                ]}
+                data-wt-lb-slide
+                data-wt-lb-slide-index={i}
+                aria-hidden={i === 0 ? 'false' : 'true'}
+              >
+                <div
+                  class="flow-lb-pan pointer-events-auto flex h-full w-full items-center justify-center origin-center touch-none"
+                  data-lb-pan
+                >
+                  <img
+                    src={fullImages[i].src}
+                    alt={s.alt}
+                    width={fullImages[i].attributes?.width}
+                    height={fullImages[i].attributes?.height}
+                    class="h-auto max-h-[85dvh] w-auto max-w-full select-none object-contain"
+                    data-lb-img
+                    draggable="false"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </dialog>
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-wt-live>
+    {steps[0].title}. {steps[0].caption}
+  </p>
+</section>
+
+<style>
+  .flow-wt-tab[data-wt-selected='true'] {
+    @apply bg-stone-100 text-stone-900 ring-1 ring-stone-200/80;
+  }
+  .flow-wt-tab[data-wt-selected='false'] {
+    @apply text-stone-600 hover:bg-stone-100 hover:text-stone-900;
+  }
+
+  .flow-wt-lb-dialog::backdrop {
+    background: transparent;
+  }
+
+  .flow-wt-lb-panel {
+    opacity: 0;
+    transform: scale(0.98);
+    transition:
+      opacity 280ms ease-out,
+      transform 280ms ease-out;
+  }
+
+  .flow-wt-lb-panel.is-open {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .flow-wt-lb-panel:not(.is-open) .flow-wt-lb-scrim {
+    opacity: 0;
+  }
+
+  .flow-wt-lb-panel.is-open .flow-wt-lb-scrim {
+    opacity: 1;
+  }
+
+  .flow-wt-lb-slide {
+    transition: opacity 220ms ease-out;
+  }
+</style>
+
+<script define:vars={{ baseId, captionsJson: JSON.stringify(captionsForScript) }}>
+  const stepsMeta = JSON.parse(captionsJson);
+
+  function initFlowWalkthrough(root) {
+    if (!(root instanceof HTMLElement) || root.dataset.wtBound === 'true') return;
+    root.dataset.wtBound = 'true';
+
+    const tabs = Array.from(root.querySelectorAll('[data-wt-tab]'));
+    const panels = Array.from(root.querySelectorAll('[data-wt-panel]'));
+    const captionEl = root.querySelector('[data-wt-caption]');
+    const liveEl = root.querySelector('[data-wt-live]');
+    const swipeEl = root.querySelector('[data-wt-swipe]');
+    const tablist = root.querySelector('[role="tablist"]');
+    const n = tabs.length;
+    let active = 0;
+
+    function setActive(next) {
+      const i = ((next % n) + n) % n;
+      active = i;
+
+      tabs.forEach((tab, j) => {
+        const isSel = j === i;
+        tab.setAttribute('aria-selected', isSel ? 'true' : 'false');
+        tab.setAttribute('data-wt-selected', isSel ? 'true' : 'false');
+        tab.tabIndex = isSel ? 0 : -1;
+      });
+
+      panels.forEach((panel, j) => {
+        const isSel = j === i;
+        panel.classList.toggle('relative', isSel);
+        panel.classList.toggle('z-10', isSel);
+        panel.classList.toggle('opacity-100', isSel);
+        panel.classList.toggle('absolute', !isSel);
+        panel.classList.toggle('inset-0', !isSel);
+        panel.classList.toggle('z-0', !isSel);
+        panel.classList.toggle('opacity-0', !isSel);
+        panel.classList.toggle('pointer-events-none', !isSel);
+      });
+
+      const meta = stepsMeta[i];
+      if (captionEl && meta) captionEl.textContent = meta.caption;
+      if (liveEl && meta) liveEl.textContent = `${meta.title}. ${meta.caption}`;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const idx = parseInt(tab.getAttribute('data-wt-index') ?? '0', 10);
+        setActive(idx);
+      });
+    });
+
+    tablist?.addEventListener('keydown', (e) => {
+      const ev = e;
+      if (!ev.key) return;
+      const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+      if (!keys.includes(ev.key)) return;
+      ev.preventDefault();
+      let next = active;
+      if (ev.key === 'ArrowLeft') next = active - 1;
+      else if (ev.key === 'ArrowRight') next = active + 1;
+      else if (ev.key === 'Home') next = 0;
+      else if (ev.key === 'End') next = n - 1;
+      setActive(next);
+      const nextTab = tabs[next];
+      if (nextTab instanceof HTMLElement) nextTab.focus();
+    });
+
+    let touchStartX = 0;
+    swipeEl?.addEventListener(
+      'touchstart',
+      (e) => {
+        const t = e.changedTouches[0];
+        if (t) touchStartX = t.screenX;
+      },
+      { passive: true }
+    );
+    swipeEl?.addEventListener(
+      'touchend',
+      (e) => {
+        const t = e.changedTouches[0];
+        if (!t) return;
+        const dx = t.screenX - touchStartX;
+        if (Math.abs(dx) < 48) return;
+        if (dx < 0) setActive(active + 1);
+        else setActive(active - 1);
+      },
+      { passive: true }
+    );
+  }
+
+  document.querySelectorAll(`[data-flow-walkthrough="${baseId}"]`).forEach((el) => {
+    if (el instanceof HTMLElement) initFlowWalkthrough(el);
+  });
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll(`[data-flow-walkthrough="${baseId}"]`).forEach((el) => {
+      if (el instanceof HTMLElement && el.dataset.wtBound !== 'true') initFlowWalkthrough(el);
+    });
+  });
+</script>
+
+<script>
+  import { initFlowWalkthroughLightboxesOnReady } from '../scripts/flow-walkthrough-lightbox';
+  initFlowWalkthroughLightboxesOnReady();
+</script>

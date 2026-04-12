@@ -8,7 +8,11 @@ thumbnail: ../thumbnails/tk-map.png
 ---
 
 import ImageLightbox from '../../components/ImageLightbox.astro';
+import FlowWalkthrough from '../../components/FlowWalkthrough.astro';
 import orcaMap from '../case-map/orca.png';
+import mapWalk1 from '../case-map/map-1.png';
+import mapWalk2 from '../case-map/map-2.png';
+import mapWalk3 from '../case-map/map-3.png';
 
 ### TL;DR
 
@@ -27,6 +31,36 @@ The existing store locator <span class="prose-marker">did not meet WCAG requirem
 I started by reviewing best practices for store locators, including <span class="prose-marker">Baymard Institute reports and competitive analysis</span>. Based on this, I redesigned both the map and the results list, shifting the focus toward a more accessible and structured experience.
 
 I <span class="prose-marker">made the results list the primary element</span> — designed to work well with screen readers and support different user needs.
+
+<FlowWalkthrough
+  id="store-locator-walkthrough"
+  steps={[
+    {
+      step: 1,
+      title: 'Default view',
+      caption:
+        'Map showing all store clusters before the user selects a location.',
+      image: mapWalk1,
+      alt: 'Store locator default view: map with nationwide store clusters and full results list.',
+    },
+    {
+      step: 2,
+      title: 'Location selected',
+      caption:
+        'Map zoomed to the selected city, with matching stores shown on the list.',
+      image: mapWalk2,
+      alt: 'Store locator after choosing a city: map zoomed to that area with narrowed store list.',
+    },
+    {
+      step: 3,
+      title: 'Store selected',
+      caption:
+        'The chosen store is highlighted on the map and its details appear in both the map card and results list.',
+      image: mapWalk3,
+      alt: 'Store locator with one store selected: pin and card highlighted, matching row emphasized in the list.',
+    },
+  ]}
+/>
 
 Because the project introduced several new patterns, I also needed a clearer way to communicate the system to the team. To address this, I <span class="prose-marker">introduced an object-oriented UX framework</span> (ORCA: Objects, Relationships, CTAs, Attributes).
 
