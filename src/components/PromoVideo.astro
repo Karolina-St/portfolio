@@ -1,11 +1,38 @@
 ---
 interface Props {
+  /** Site-root path (e.g. `/videos/file.mp4`) or full URL — not a Vite `?url` import. */
   src: string;
   /** Visible caption and primary accessible name for the video. */
   description: string;
+  /**
+   * Optional extra source: e.g. pass MP4 here when `src` is a `.mov` so Chrome can play the first listed format.
+   */
+  mp4Src?: string;
 }
 
-const { src, description } = Astro.props;
+const { src, description, mp4Src } = Astro.props;
+
+function withBase(path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  if (!path.startsWith('/')) return path;
+  const base = import.meta.env.BASE_URL;
+  if (!base || base === '/') return path;
+  return `${base.replace(/\/$/, '')}${path}`;
+}
+
+function mimeFromPath(path: string): string {
+  const file = path.split('?')[0].split('#')[0].toLowerCase();
+  if (file.endsWith('.mp4') || file.endsWith('.m4v')) return 'video/mp4';
+  if (file.endsWith('.webm')) return 'video/webm';
+  if (file.endsWith('.mov')) return 'video/quicktime';
+  return 'video/mp4';
+}
+
+const primarySrc = withBase(src);
+const extraMp4Src = mp4Src ? withBase(mp4Src) : undefined;
+const primaryMime = mimeFromPath(src);
+const downloadLabel =
+  primaryMime === 'video/quicktime' ? 'Download the promo video (MOV)' : 'Download the promo video (MP4)';
 ---
 
 <div class="promo-video not-prose my-8" data-promo-video>
@@ -21,12 +48,21 @@ const { src, description } = Astro.props;
         playsinline
         aria-label={description}
       >
-        <source src={src} type="video/quicktime" />
+        {
+          extraMp4Src ? (
+            <>
+              <source src={extraMp4Src} type="video/mp4" />
+              <source src={primarySrc} type={primaryMime} />
+            </>
+          ) : (
+            <source src={primarySrc} type={primaryMime} />
+          )
+        }
         <a
-          href={src}
+          href={primarySrc}
           class="text-sm text-stone-300 underline underline-offset-2 hover:text-white"
         >
-          Download the promo video (MOV)
+          {downloadLabel}
         </a>
       </video>
       <div
@@ -108,6 +144,9 @@ const { src, description } = Astro.props;
         </button>
       </div>
     </div>
+    <p class="mt-2 hidden text-sm text-amber-900" data-promo-error role="alert">
+      Playback failed in this browser. Use the download link in the player or try another browser.
+    </p>
     <figcaption class="mt-3 text-center text-sm text-stone-600">
       {description}
     </figcaption>
@@ -164,9 +203,21 @@ const { src, description } = Astro.props;
       syncPlayPause();
       syncMute();
 
+      const errEl = root.querySelector('[data-promo-error]');
+      function showPlaybackError() {
+        errEl?.classList.remove('hidden');
+      }
+
+      v.addEventListener('error', showPlaybackError);
+
       tb.addEventListener('click', () => {
-        if (v.paused) void v.play();
-        else v.pause();
+        if (v.paused) {
+          void v.play().catch(() => {
+            showPlaybackError();
+          });
+        } else {
+          v.pause();
+        }
       });
 
       mb.addEventListener('click', () => {
