@@ -23,19 +23,58 @@ const failureStories = (await getCollection('failureStories')).sort(
         projects.map((project) => (
           <li>
             <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
-              {project.data.thumbnail && (
-                <div class="mb-5 w-full overflow-hidden rounded-lg">
-                  <Image
-                    src={project.data.thumbnail}
-                    alt=""
-                    class="h-auto w-full"
-                    loading="lazy"
-                    decoding="async"
-                    quality={95}
-                    widths={[672, 1008, 1344, 1600]}
-                    sizes="(min-width: 768px) 42rem, 100vw"
-                  />
+              {project.data.thumbnail ? (
+                project.data.caseStudyComingSoon ? (
+                  <div class="mb-5 w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={project.data.thumbnail}
+                      alt=""
+                      class="h-auto w-full"
+                      loading="lazy"
+                      decoding="async"
+                      quality={95}
+                      widths={[672, 1008, 1344, 1600]}
+                      sizes="(min-width: 768px) 42rem, 100vw"
+                    />
+                  </div>
+                ) : (
+                  <a
+                    href={`/work/${project.slug}`}
+                    class="mb-5 block w-full overflow-hidden rounded-lg hover:opacity-80 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900"
+                    aria-label={`Read case study: ${project.data.title}`}
+                  >
+                    <Image
+                      src={project.data.thumbnail}
+                      alt=""
+                      class="h-auto w-full"
+                      loading="lazy"
+                      decoding="async"
+                      quality={95}
+                      widths={[672, 1008, 1344, 1600]}
+                      sizes="(min-width: 768px) 42rem, 100vw"
+                    />
+                  </a>
+                )
+              ) : project.data.caseStudyComingSoon ? (
+                <div
+                  class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
+                  aria-hidden="true"
+                >
+                  Project image
                 </div>
+              ) : (
+                <a
+                  href={`/work/${project.slug}`}
+                  class="mb-5 block w-full rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900"
+                  aria-label={`Read case study: ${project.data.title}`}
+                >
+                  <div
+                    class="flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500 hover:border-stone-400 transition-colors"
+                    aria-hidden="true"
+                  >
+                    Project image
+                  </div>
+                </a>
               )}
               <h2 class="font-serif text-2xl text-stone-900">
                 {project.data.caseStudyComingSoon ? (
@@ -90,25 +129,57 @@ const failureStories = (await getCollection('failureStories')).sort(
             <li>
               <article class="max-w-prose border-b border-stone-200 pb-16 md:pb-20 last:border-0">
                 {story.data.thumbnail ? (
-                  <div class="mb-5 w-full overflow-hidden rounded-lg">
-                    <Image
-                      src={story.data.thumbnail}
-                      alt=""
-                      class="h-auto w-full"
-                      loading="lazy"
-                      decoding="async"
-                      quality={95}
-                      widths={[672, 1008, 1344, 1600]}
-                      sizes="(min-width: 768px) 42rem, 100vw"
-                    />
-                  </div>
-                ) : (
+                  story.data.caseStudyComingSoon ? (
+                    <div class="mb-5 w-full overflow-hidden rounded-lg">
+                      <Image
+                        src={story.data.thumbnail}
+                        alt=""
+                        class="h-auto w-full"
+                        loading="lazy"
+                        decoding="async"
+                        quality={95}
+                        widths={[672, 1008, 1344, 1600]}
+                        sizes="(min-width: 768px) 42rem, 100vw"
+                      />
+                    </div>
+                  ) : (
+                    <a
+                      href={`/work/failure/${story.slug}`}
+                      class="mb-5 block w-full overflow-hidden rounded-lg hover:opacity-80 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900"
+                      aria-label={`Read case study: ${story.data.title}`}
+                    >
+                      <Image
+                        src={story.data.thumbnail}
+                        alt=""
+                        class="h-auto w-full"
+                        loading="lazy"
+                        decoding="async"
+                        quality={95}
+                        widths={[672, 1008, 1344, 1600]}
+                        sizes="(min-width: 768px) 42rem, 100vw"
+                      />
+                    </a>
+                  )
+                ) : story.data.caseStudyComingSoon ? (
                   <div
                     class="mb-5 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500"
                     aria-hidden="true"
                   >
                     Project image
                   </div>
+                ) : (
+                  <a
+                    href={`/work/failure/${story.slug}`}
+                    class="mb-5 block w-full rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900"
+                    aria-label={`Read case study: ${story.data.title}`}
+                  >
+                    <div
+                      class="flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-500 hover:border-stone-400 transition-colors"
+                      aria-hidden="true"
+                    >
+                      Project image
+                    </div>
+                  </a>
                 )}
                 <h3 class="font-serif text-2xl text-stone-900">
                   {story.data.caseStudyComingSoon ? (
