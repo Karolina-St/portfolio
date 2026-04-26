@@ -5,5 +5,5 @@ She is proactive, reliable, and an excellent team player. With her positive atti
 author: Karolina Ludzińska
 role: Project Manager
 company: Polkomtel
-order: 1
+order: 2
 ---

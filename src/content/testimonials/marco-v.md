@@ -3,5 +3,5 @@ quote: "I had the pleasure of mentoring Karolina (...) Her approach to research 
 author: Aleksandra Bis
 role: Aleksandra was my mentor
 company: Dare IT
-order: 2
+order: 3
 ---
