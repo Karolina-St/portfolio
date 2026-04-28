@@ -20,25 +20,43 @@ const testimonials = (await getCollection('testimonials')).sort(
     class="mx-auto max-w-content px-4 md:px-6 pt-16 pb-20 md:pt-24 md:pb-28"
     data-reveal
   >
-    <p class="font-serif text-3xl md:text-4xl lg:text-[2.5rem] leading-snug text-stone-900 max-w-prose">
-      Hello!
-    </p>
-    <p class="mt-4 font-serif text-3xl md:text-4xl lg:text-[2.25rem] leading-[130%] lg:leading-[1.33] text-stone-900 max-w-prose">
-      I like to understand how things work – and use that to design products that are clear, structured, and
-      grounded in real user needs.
-    </p>
-    <h2 class="mt-8 max-w-prose text-base font-normal font-sans leading-relaxed text-stone-700">
-      I often initiate new projects and approaches, including AI-related ones.
-      Currently, I work at Plus (telco), and I’m also developing my own ideas through Saha Apps.
-    </h2>
-    <p class="mt-10">
-      <a
-        href="/about"
-        class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+      <div class="min-w-0 lg:max-w-prose">
+        <p class="font-serif text-3xl md:text-4xl lg:text-[2.5rem] leading-snug text-stone-900 max-w-prose">
+          Hello!
+        </p>
+        <p class="mt-4 font-serif text-3xl md:text-4xl lg:text-[2.25rem] leading-[130%] lg:leading-[1.33] text-stone-900 max-w-prose">
+          I like to understand how things work – and use that to design products that are clear, structured, and
+          grounded in real user needs.
+        </p>
+        <h2 class="mt-8 max-w-prose text-base font-normal font-sans leading-relaxed text-stone-700">
+          I often initiate new projects and approaches, including AI-related ones.
+          Currently, I work at Plus (telco), and I’m also developing my own ideas through Saha Apps.
+        </h2>
+        <p class="mt-10">
+          <a
+            href="/about"
+            class="text-base font-medium text-stone-900 underline underline-offset-4 decoration-stone-400 hover:decoration-stone-700 transition-colors"
+          >
+            More about me
+          </a>
+        </p>
+      </div>
+      <figure
+        class="mx-auto flex w-full max-w-xs shrink-0 flex-col lg:mx-0 lg:w-80 lg:max-w-sm lg:shrink-0"
+        data-parallax="subtle"
       >
-        More about me
-      </a>
-    </p>
+        <img
+          src="/portrait.png"
+          alt="Karolina Stachowiak"
+          width="1024"
+          height="1024"
+          class="w-full rounded-[80px] object-cover shadow-none aspect-square max-h-[min(85vw,24rem)]"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
   </section>
 
   <section class="border-t border-stone-200 bg-white overflow-hidden">
